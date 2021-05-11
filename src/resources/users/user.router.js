@@ -14,6 +14,7 @@ router.route('/:userId').get(async (req, res) => {
 
 router.route('/').post(async (req, res) => {
   const user = await usersService.create(req.body);
+  res.status(201);
   res.json(User.toResponse(user));
 });
 

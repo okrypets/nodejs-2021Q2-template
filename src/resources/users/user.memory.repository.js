@@ -16,13 +16,13 @@ const get = async (id) => {
   return user;
 };
 
-const create = async (userData) => {
-  const user = await createUser(userData);
+const create = async (data) => {
+  const user = await createUser(data);
   return user;
 };
 
-const update = async (id, userData) => {
-  const user = await updateUser(id, userData);
+const update = async (id, data) => {
+  const user = await updateUser(id, data);
   return user;
 };
 
