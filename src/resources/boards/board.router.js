@@ -8,8 +8,15 @@ router.route('/').get(async (req, res) => {
 });
 
 router.route('/:boardId').get(async (req, res) => {
-  const board = await boardsService.get(req.params.boardId);
-  res.json(Board.toResponse(board));
+  try {
+    const board = await boardsService.get(req.params.boardId);
+    res.json(Board.toResponse(board));
+  } catch (error) {
+    if (error.message === 'Not found') {
+      res.status(404);
+      res.json('Board not found');
+    }
+  }
 });
 
 router.route('/').post(async (req, res) => {
@@ -24,8 +31,16 @@ router.route('/:boardId').put(async (req, res) => {
 });
 
 router.route('/:boardId').delete(async (req, res) => {
-  await boardsService.deleteBoard(req.params.boardId);
-  res.json('The board has been deleted');
+  try {
+    await boardsService.deleteBoard(req.params.boardId);
+    res.status(204);
+    res.json('The board has been deleted');
+  } catch (error) {
+    if (error.message === 'Not found') {
+      res.status(404);
+      res.json('Board not found');
+    }
+  }
 });
 
 module.exports = router;
