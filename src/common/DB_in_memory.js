@@ -29,13 +29,10 @@ const updateUser = (id, data) => {
 
 const deleteUserById = (id) => {
   const userIndex = DB.users.findIndex((user) => user.id === id);
-  if (userIndex === -1) {
-    throw new Error('Not found');
-  }
+
   DB.users.splice(userIndex, 1);
   DB.tasks.map((boardTasks) => {
     const tasks = boardTasks[1];
-
     tasks.map((it) => {
       if (it.userId === id) {
         it.update({ userId: null });
@@ -45,15 +42,14 @@ const deleteUserById = (id) => {
     });
     return boardTasks;
   });
+
+  return userIndex;
 };
 
 const getBoards = () => DB.boards;
 
 const getBoard = (id) => {
   const filteredUser = DB.boards.filter((board) => board.id === id);
-  if (filteredUser.length === 0) {
-    throw new Error('Not found');
-  }
   return filteredUser[0];
 };
 
@@ -73,11 +69,13 @@ const updateBoard = (id, data) => {
 const deleteBoardById = (id) => {
   const boardIndex = DB.boards.findIndex((board) => board.id === id);
   if (boardIndex === -1) {
-    throw new Error('Not found');
+    return boardIndex;
   }
   DB.boards.splice(boardIndex, 1);
   const boardIndexInTasks = DB.tasks.findIndex((it) => it[0] === id);
   DB.tasks.splice(boardIndexInTasks, 1);
+
+  return boardIndex;
 };
 
 const getTasks = (boardId) => {
@@ -89,34 +87,26 @@ const getTasks = (boardId) => {
 const getTask = (boardId, taskId) => {
   const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
   if (boardIndex === -1) {
-    throw new Error('Not found');
+    return false;
   }
-  const task = DB.tasks[boardIndex][1].find((it) => it.id === taskId);
-  if (!task) {
-    throw new Error('Not found');
-  }
-  return task;
+  return DB.tasks[boardIndex][1].find((it) => it.id === taskId);
 };
 
 const createTask = (boardId, data) => {
   const newTask = new Task({ ...data, boardId });
   const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
-  if (boardIndex === -1) {
-    throw new Error('Bad request');
-  } else {
-    DB.tasks[boardIndex][1].push(newTask);
-  }
+  DB.tasks[boardIndex][1].push(newTask);
   return newTask;
 };
 
 const updateTask = (boardId, taskId, data) => {
   const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
   if (boardIndex === -1) {
-    throw new Error('Not found');
+    return false;
   }
   const taskIndex = DB.tasks[boardIndex][1].findIndex((it) => it.id === taskId);
   if (taskIndex === -1) {
-    throw new Error('Not found');
+    return false;
   }
   DB.tasks[boardIndex][1][taskIndex].update(data);
   return DB.tasks[boardIndex][1][taskIndex];
@@ -125,13 +115,14 @@ const updateTask = (boardId, taskId, data) => {
 const deleteTaskById = (boardId, taskId) => {
   const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
   if (boardIndex === -1) {
-    throw new Error('Not found');
+    return boardIndex;
   }
   const taskIndex = DB.tasks[boardIndex][1].findIndex((it) => it.id === taskId);
   if (taskIndex === -1) {
-    throw new Error('Not found');
+    return taskIndex;
   }
   DB.tasks[boardIndex][1].splice(taskIndex, 1);
+  return taskIndex;
 };
 
 module.exports = {
