@@ -6,28 +6,39 @@ const {
   deleteUserById,
 } = require('../../common/DB_in_memory');
 
-const getAll = async () => {
-  const users = await getUsers();
-  return users;
-};
+/**
+ * This function run getUsers() and return all Users from DB
+ * @returns {function(): Array.<User>} array of all Users
+ */
+const getAll = async () => getUsers();
 
-const get = async (id) => {
-  const user = await getUser(id);
-  return user;
-};
+/**
+ * This function run getUser() and return User by id
+ * @param {string} id user id
+ * @returns {function(string): User} User instance
+ */
+const get = async (id) => getUser(id);
 
-const create = async (data) => {
-  const user = await createUser(data);
-  return user;
-};
+/**
+ * this function run createUser() and create new User
+ * @param {User} data User instance
+ * @returns {function(User): User} created User
+ */
+const create = async (data) => createUser(data);
 
-const update = async (id, data) => {
-  const user = await updateUser(id, data);
-  return user;
-};
+/**
+ * This function run updateUser() and return updated User
+ * @param {string} id user id
+ * @param {object.<string, user>} data object with keys and value to update User data by keys
+ * @returns {function(string, object.<string, user>): User} updated User
+ */
+const update = async (id, data) => updateUser(id, data);
 
-const deleteUser = async (id) => {
-  await deleteUserById(id);
-};
+/**
+ * This function run deleteUserById() and return index that the User had in the DB
+ * @param {string} id user id
+ * @returns {function(string): number} index of removed User
+ */
+const deleteUser = async (id) => deleteUserById(id);
 
 module.exports = { getAll, get, create, update, deleteUser };

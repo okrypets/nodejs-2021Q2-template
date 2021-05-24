@@ -1,6 +1,15 @@
 const { v4 } = require('uuid');
-
+/**
+ * Class creates an User.
+ * @class
+ */
 class User {
+  /**
+   * Constuctor of class User
+   * @constructor
+   * @typedef {{id: string, name: string, login: string, password: string}} user
+   * @param {object.<string, user>} object with User data
+   */
   constructor({
     id = v4(),
     name = 'USER',
@@ -13,11 +22,20 @@ class User {
     this.password = password;
   }
 
+  /**
+   * This static method return User instance without password
+   * @param {User} user User instance
+   * @returns {User} User without password
+   */
   static toResponse(user) {
     const { id, name, login } = user;
     return { id, name, login };
   }
 
+  /**
+   * This method update User data with new data.
+   * @param {object.<string, user>} newdata object with keys and value to update User data by keys
+   */
   update(newdata) {
     if (newdata.name) this.name = newdata.name;
     if (newdata.login) this.login = newdata.login;
