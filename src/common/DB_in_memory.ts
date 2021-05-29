@@ -139,25 +139,22 @@ export const updateBoard = (id: string, data: IUpdateBoardData): IBoard | boolea
  */
 export const deleteBoardById = (id: string): number => {
   const boardIndex = DB.boards.findIndex((board: IBoard) => board.id === id);
+
   if (boardIndex === -1) {
     return boardIndex;
   }
-  DB.boards.splice(boardIndex, 1);
-  const boardIndexInTasks = DB.tasks.findIndex((it:ITask) => it.boardId === id);
-  DB.tasks.splice(boardIndexInTasks, 1);
-
+  DB.boards.splice(boardIndex, 1)
+  const filteredTasks = DB.tasks.filter(it => it.boardId !== id)
+  DB.tasks = filteredTasks
   return boardIndex;
 };
-
-const getTasksByBoardId = (id: string): ITask[] => DB.tasks.filter((task:ITask) => task.boardId === id)
 
 /**
  * This function return an array with all Tasks in DB to be assinged to Board ID
  * @param {string} boardId board id
  * @returns {Array.<Task>} An Array with all Tasks in DB.
  */
-export const getTasks = (boardId: string): ITask[] => getTasksByBoardId(boardId)
-
+export const getTasks = (boardId: string): ITask[] => DB.tasks.filter((task:ITask) => task.boardId === boardId)
 
 /**
  * This function find Task by board ID and task ID and return found Task or false if there is no borad with id === boardId
@@ -166,8 +163,7 @@ export const getTasks = (boardId: string): ITask[] => getTasksByBoardId(boardId)
  * @returns {Task|boolean} Found task or false if there is no borad with id === boardId
  */
 export const getTask = (boardId: string, taskId: string): ITask | boolean => {
-  const tasksByBoardId = getTasksByBoardId(boardId);
-  const task = tasksByBoardId.find((it:ITask) => it.id === taskId);
+  const task = DB.tasks.find((it:ITask) => it.id === taskId && it.boardId === boardId);
   if (!task) return false
   return task;
 };
@@ -198,7 +194,6 @@ export const updateTask = (boardId: string, taskId: string, data: IUpdateTaskDat
   if (!task || typeof task === "boolean") {
     return false;
   } 
-  // const taskIndex = DB.tasks.findIndex((task:ITask) => task.id === taskId)
   if (task.update ) task.update(data);
   const updatedTask = getTask(boardId, taskId)
   return updatedTask;

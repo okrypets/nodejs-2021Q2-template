@@ -13,16 +13,15 @@ router.route('/').get(async (_: Request, res: Response) => {
 router.route('/:boardId').get(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && typeof req.params["boardId"] === "string") {
     const board = await boardsService.get(req.params["boardId"]);
-  if (!board || typeof board === "boolean") {
-    res.status(404).json('Board not found');
-  } else res.json(Board.toResponse(board));
+    if (!board || typeof board === "boolean") {
+      res.status(404).json('Board not found');
+    } else res.json(Board.toResponse(board));
   } else next()
 }); 
 
 router.route('/').post(async (req: Request, res: Response) => {
   const board = await boardsService.create(req.body);
-  res.status(201);
-  res.json(Board.toResponse(board));
+  res.status(201).json(Board.toResponse(board));
 });
 
 router.route('/:boardId').put(async (req: Request, res: Response, next: NextFunction) => {
@@ -36,10 +35,9 @@ router.route('/:boardId').put(async (req: Request, res: Response, next: NextFunc
 router.route('/:boardId').delete(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && typeof req.params["boardId"] === "string") {
     const boardIndex = await boardsService.deleteBoard(req.params["boardId"]);
-  if (boardIndex === -1) {
-    res.status(404);
-    res.json('Board not found');
-  } else res.status(204).json('The board has been deleted');
+    if (boardIndex === -1) {
+      res.status(404).json('Board not found');
+    } else res.status(204).json('The board has been deleted');
   } else next()
   
 });

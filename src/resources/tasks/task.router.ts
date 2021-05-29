@@ -17,10 +17,10 @@ router.route('/:boardId/tasks').get(async (req: Request, res: Response, next: Ne
 router.route('/:boardId/tasks/:taskId').get(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && req.params["taskId"] && typeof req.params["boardId"] === "string" && typeof req.params["taskId"] === "string") {
     const { boardId, taskId } = req.params;
-  const task = await tasksService.get(boardId, taskId);
-  if (!task) {
-    res.status(404).json('Task not found');
-  } else if (typeof task !== "boolean" ) res.json(Task.toResponse(task));
+    const task = await tasksService.get(boardId, taskId);
+    if (!task || typeof task === "boolean") {
+      res.status(404).json('Task not found');
+    } else res.json(Task.toResponse(task));
   } else next()
   
 });
