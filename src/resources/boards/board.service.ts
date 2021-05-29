@@ -1,24 +1,25 @@
-const boardsRepo = require('./board.memory.repository');
+import boardsRepo from './board.memory.repository';
+import { IBoard, IUpdateBoardData } from "./board.model"
 
 /**
  * This function return result of getAll()
  * @returns {function(): Array.<Board>}  return all Boards from DB
  */
-const getAll = () => boardsRepo.getAll();
+const getAll = async (): Promise<IBoard[]> => boardsRepo.getAll();
 
 /**
  * This function return result of get()
  * @param {string} id board id
  * @returns {function(string):Board} return Board instance
  */
-const get = (id) => boardsRepo.get(id);
+const get = async (id: string): Promise<IBoard | boolean> => boardsRepo.get(id);
 
 /**
  * This function return result of create()
  * @param {Board} data
  * @returns {function(Board): Board} return creates Board
  */
-const create = (data) => boardsRepo.create(data);
+const create = async (data: IBoard): Promise<IBoard> => boardsRepo.create(data);
 
 /**
  * This function return result of update()
@@ -28,13 +29,13 @@ const create = (data) => boardsRepo.create(data);
  * @param {object.<string, board>} data object with keys and value to update Task data by keys
  * @returns {function(string, object.<string, board>): Board} Updated Board instance
  */
-const update = (id, data) => boardsRepo.update(id, data);
+const update = async (id: string, data: IUpdateBoardData): Promise<IBoard | boolean> => boardsRepo.update(id, data);
 
 /**
  * This function return result of deleteBoard()
  * @param {string} id board id
  * @returns {number} index that has Board in DB
  */
-const deleteBoard = (id) => boardsRepo.deleteBoard(id);
+const deleteBoard = async (id: string): Promise<number> => boardsRepo.deleteBoard(id);
 
-module.exports = { getAll, get, create, update, deleteBoard };
+export default { getAll, get, create, update, deleteBoard };

@@ -8,18 +8,11 @@
   },
   "parserOptions": {
     "sourceType": "module",
-    "ecmaVersion": 2021,
-    "ecmaFeatures": {
-      "impliedStrict": true
-    }
+    "project": "./tsconfig.json"
   },
-  "settings": {
-    "noInlineConfig": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:node/recommended",
-    "airbnb-base",
+  "settings": {"noInlineConfig": true},
+  "extends": [    
+    "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
   "rules": {

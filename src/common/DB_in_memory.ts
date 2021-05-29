@@ -1,27 +1,35 @@
-const User = require('../resources/users/user.model');
-const Board = require('../resources/boards/board.model');
-const Task = require('../resources/tasks/task.model');
+import User, { IUser, IUpdateUserData } from '../resources/users/user.model';
+import Board, { IBoard, IUpdateBoardData } from '../resources/boards/board.model';
+import Task, { ITask, IUpdateTaskData } from '../resources/tasks/task.model';
+
+const DBUsers: IUser[] = [];
+const DBTasks: ITask[] = [];
+const DBoards: IBoard[] = [];
+
 
 const DB = {
-  users: [],
-  boards: [],
-  tasks: [],
+  users: DBUsers,
+  boards: DBoards,
+  tasks: DBTasks,
 };
 
 /**
  * This function return an array with all Users in DB
  * @returns {Array.<User>} An array with all Users in DB.
  */
-const getUsers = () => DB.users;
+export const getUsers = (): IUser[] => DB.users;
 
 /**
  * This function find User in DB by id and return it
  * @param {string} id user id
  * @returns {User} Found User
  */
-const getUser = (id) => {
-  const filteredUser = DB.users.filter((user) => user.id === id);
-  return filteredUser[0];
+export const getUser = (id:string): IUser | boolean => {
+  const user = DB.users.find((it: IUser) => it.id === id);
+  if (!user) {
+    return false;
+  } 
+  return user;
 };
 
 /**
@@ -29,8 +37,8 @@ const getUser = (id) => {
  * @param {User} data User instance
  * @returns {User} Created User
  */
-const createUser = (data) => {
-  const newUser = new User({ ...data });
+export const createUser = (data: IUser): IUser => {
+  const newUser:IUser = new User(data);
   DB.users.push(newUser);
   return newUser;
 };
@@ -42,10 +50,14 @@ const createUser = (data) => {
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {User} Updated User
  */
-const updateUser = (id, data) => {
-  const userIndex = DB.users.findIndex((user) => user.id === id);
-  DB.users[userIndex].update(data);
-  return DB.users[userIndex];
+export const updateUser = (id: string, data: IUpdateUserData): IUser | boolean => {
+  const user = getUser(id);
+  if (typeof user !== "boolean" && user.update) {
+    user.update(data);
+    const updatedUser = getUser(id);
+    return updatedUser;
+  } 
+  return false
 };
 
 /**
@@ -55,20 +67,16 @@ const updateUser = (id, data) => {
  * @param {string} id user id
  * @returns {number} Index that the User had in the DB
  */
-const deleteUserById = (id) => {
-  const userIndex = DB.users.findIndex((user) => user.id === id);
+export const deleteUserById = (id: string): number => {
+  const userIndex = DB.users.findIndex((user: IUser) => user.id === id);
+if (userIndex === -1) return userIndex;
 
   DB.users.splice(userIndex, 1);
-  DB.tasks.map((boardTasks) => {
-    const tasks = boardTasks[1];
-    tasks.map((it) => {
-      if (it.userId === id) {
-        it.update({ userId: null });
-        return it;
-      }
-      return it;
-    });
-    return boardTasks;
+  DB.tasks.map((task: ITask) => {
+    if (task.userId === id && task.update) {
+      task.update({ userId: null });
+    }
+    return task;
   });
 
   return userIndex;
@@ -78,16 +86,19 @@ const deleteUserById = (id) => {
  * This function return an array with all Boards in DB *
  * @returns {Array.<Board>} An Array with all Boards in DB.
  */
-const getBoards = () => DB.boards;
+export const getBoards = (): IBoard[] => DB.boards;
 
 /**
  * This function find Board in DB by id and return it
  * @param {string} id board id
  * @returns {Board} Found Board
  */
-const getBoard = (id) => {
-  const filteredBoard = DB.boards.filter((board) => board.id === id);
-  return filteredBoard[0];
+export const getBoard = (id: string): IBoard | boolean => {
+  const board = DB.boards.find((it: IBoard) => it.id === id);
+  if (!board) {
+    return false;
+  } 
+  return board;
 };
 
 /**
@@ -96,10 +107,9 @@ const getBoard = (id) => {
  * @param {Board} data Board instance
  * @returns {Board} Created Board
  */
-const createBoard = (data) => {
-  const newBoard = new Board({ ...data });
+export const createBoard = (data: IBoard): IBoard => {
+  const newBoard: IBoard = new Board({ ...data });
   DB.boards.push(newBoard);
-  DB.tasks.push([newBoard.id, []]);
   return newBoard;
 };
 
@@ -111,10 +121,13 @@ const createBoard = (data) => {
  * @param {object.<string, board>} data object with keys and value to update Board data by keys
  * @returns {Board} Updated Board
  */
-const updateBoard = (id, data) => {
-  const boardIndex = DB.boards.findIndex((board) => board.id === id);
-  DB.boards[boardIndex].update(data);
-  return DB.boards[boardIndex];
+export const updateBoard = (id: string, data: IUpdateBoardData): IBoard | boolean => {
+  const board = getBoard(id);
+  if (typeof board !== "boolean" && board.update) {
+    board.update(data);
+    const updatedBoard = getBoard(id);
+    return updatedBoard;
+  } return false
 };
 
 /**
@@ -124,28 +137,27 @@ const updateBoard = (id, data) => {
  * @param {string} id board id
  * @returns {number} index that the Board had in the DB.
  */
-const deleteBoardById = (id) => {
-  const boardIndex = DB.boards.findIndex((board) => board.id === id);
+export const deleteBoardById = (id: string): number => {
+  const boardIndex = DB.boards.findIndex((board: IBoard) => board.id === id);
   if (boardIndex === -1) {
     return boardIndex;
   }
   DB.boards.splice(boardIndex, 1);
-  const boardIndexInTasks = DB.tasks.findIndex((it) => it[0] === id);
+  const boardIndexInTasks = DB.tasks.findIndex((it:ITask) => it.boardId === id);
   DB.tasks.splice(boardIndexInTasks, 1);
 
   return boardIndex;
 };
+
+const getTasksByBoardId = (id: string): ITask[] => DB.tasks.filter((task:ITask) => task.boardId === id)
 
 /**
  * This function return an array with all Tasks in DB to be assinged to Board ID
  * @param {string} boardId board id
  * @returns {Array.<Task>} An Array with all Tasks in DB.
  */
-const getTasks = (boardId) => {
-  const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
-  if (boardIndex === -1) return [];
-  return DB.tasks[boardIndex][1];
-};
+export const getTasks = (boardId: string): ITask[] => getTasksByBoardId(boardId)
+
 
 /**
  * This function find Task by board ID and task ID and return found Task or false if there is no borad with id === boardId
@@ -153,12 +165,11 @@ const getTasks = (boardId) => {
  * @param {string} taskId task id
  * @returns {Task|boolean} Found task or false if there is no borad with id === boardId
  */
-const getTask = (boardId, taskId) => {
-  const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
-  if (boardIndex === -1) {
-    return false;
-  }
-  return DB.tasks[boardIndex][1].find((it) => it.id === taskId);
+export const getTask = (boardId: string, taskId: string): ITask | boolean => {
+  const tasksByBoardId = getTasksByBoardId(boardId);
+  const task = tasksByBoardId.find((it:ITask) => it.id === taskId);
+  if (!task) return false
+  return task;
 };
 
 /**
@@ -167,10 +178,9 @@ const getTask = (boardId, taskId) => {
  * @param {Task} data Task instance
  * @returns {Task} Created Task
  */
-const createTask = (boardId, data) => {
-  const newTask = new Task({ ...data, boardId });
-  const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
-  DB.tasks[boardIndex][1].push(newTask);
+export const createTask = (boardId: string, data: ITask): ITask => {
+  const newTask:ITask = new Task({ ...data, boardId });
+  DB.tasks.push(newTask);
   return newTask;
 };
 
@@ -183,17 +193,15 @@ const createTask = (boardId, data) => {
  * @param {object.<string, task>} data object with keys and value to update Task data by keys
  * @returns {Task|boolean} return updated Board or false if there is no Task found
  */
-const updateTask = (boardId, taskId, data) => {
-  const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
-  if (boardIndex === -1) {
+export const updateTask = (boardId: string, taskId: string, data: IUpdateTaskData): ITask | boolean => {
+  const task = getTask(boardId, taskId)
+  if (!task || typeof task === "boolean") {
     return false;
-  }
-  const taskIndex = DB.tasks[boardIndex][1].findIndex((it) => it.id === taskId);
-  if (taskIndex === -1) {
-    return false;
-  }
-  DB.tasks[boardIndex][1][taskIndex].update(data);
-  return DB.tasks[boardIndex][1][taskIndex];
+  } 
+  // const taskIndex = DB.tasks.findIndex((task:ITask) => task.id === taskId)
+  if (task.update ) task.update(data);
+  const updatedTask = getTask(boardId, taskId)
+  return updatedTask;
 };
 
 /**
@@ -202,20 +210,17 @@ const updateTask = (boardId, taskId, data) => {
  * @param {string} taskId task id
  * @returns {number} index that the Task had in the DB.
  */
-const deleteTaskById = (boardId, taskId) => {
-  const boardIndex = DB.tasks.findIndex((it) => it[0] === boardId);
-  if (boardIndex === -1) {
-    return boardIndex;
-  }
-  const taskIndex = DB.tasks[boardIndex][1].findIndex((it) => it.id === taskId);
+export const deleteTaskById = (boardId: string, taskId: string): number => {
+  const taskIndex = DB.tasks.findIndex((task:ITask) => task.id === taskId && task.boardId === boardId)
+  
   if (taskIndex === -1) {
     return taskIndex;
   }
-  DB.tasks[boardIndex][1].splice(taskIndex, 1);
+  DB.tasks.splice(taskIndex, 1);
   return taskIndex;
 };
 
-module.exports = {
+export default {
   getUsers,
   getUser,
   createUser,

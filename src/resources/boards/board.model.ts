@@ -1,10 +1,34 @@
-const { v4 } = require('uuid');
+import { v4 } from 'uuid';
+export interface IColumn {
+  id: string,
+  title: string,
+  order: number,
+}
+
+export interface IBoard {
+  id: string;
+  title: string;
+  columns: IColumn[];
+  update?: (data: IUpdateBoardData) => void;
+  toResponse?: (user: IBoard) =>IUpdateBoardData; 
+}
+
+export interface IUpdateBoardData {
+  title?: string,
+  columns?: IColumn[],
+}
 
 /**
  * class Board
  * @class
  */
-class Board {
+class Board implements IBoard {
+  readonly id: string;
+
+  title: string;
+
+  columns: any;
+
   /**
    * Constructor of class Board
    * @constructor
@@ -12,7 +36,7 @@ class Board {
    * @typedef {{title: string, order: number}} column
    * @param {object.<string, board>} object with Task data
    */
-  constructor({ id = v4(), title = 'Board', columns = [] } = {}) {
+  constructor({ id = v4(), title = 'Board', columns = [] }: IBoard) {
     this.id = id;
     this.title = title;
     this.columns = columns.map((column) => ({ ...column, id: v4() }));
@@ -23,7 +47,7 @@ class Board {
    * @param {Board} board Board instance
    * @returns {Board} board instatnce
    */
-  static toResponse(board) {
+  static toResponse(board: IBoard): IBoard {
     return board;
   }
 
@@ -31,10 +55,10 @@ class Board {
    * This method update Board data with new data.
    * @param {object.<string, bpard>} newdata object with keys and value to update Board data by keys
    */
-  update(newdata) {
+  update(newdata: IUpdateBoardData): void {
     if (newdata.title) this.title = newdata.title;
     if (newdata.columns) this.columns = newdata.columns;
   }
 }
 
-module.exports = Board;
+export default Board;
