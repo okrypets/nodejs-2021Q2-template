@@ -9,7 +9,7 @@ const {
 /**
  * This function run getTasks() and return all Tasks from DB
  * @param {string} boardId board id
- * @returns {function(string): Array.<Task>} array with all Tasks assigned to boardId
+ * @returns {Promise.<Array.<Task>>} Promise which resolved with array with all Tasks assigned to boardId
  */
 const getAll = async (boardId) => getTasks(boardId);
 
@@ -17,7 +17,7 @@ const getAll = async (boardId) => getTasks(boardId);
  * This function run getTask() and return Task from DB by board id and task id
  * @param {string} boardId board id
  * @param {string} taskid task id
- * @returns {function(string, string): Task} Found Task
+ * @returns {Promise.<Task>} Promise which resolved with found Task
  */
 const get = async (boardId, taskid) => getTask(boardId, taskid);
 
@@ -25,16 +25,17 @@ const get = async (boardId, taskid) => getTask(boardId, taskid);
  * This function run createTask() and return crated Task
  * @param {string} boardId board id
  * @param {Task} data Task instance
- * @returns {function(string, Task): Task} created Task
+ * @returns {Promise.<Task>} Promise which resolved with created Task
  */
 const create = async (boardId, data) => createTask(boardId, data);
 
 /**
  * This function run updateTask() and return updated Task
+ * @typedef {{title: string, order: number, description: string, userId: string, boardId: string, columnId: string}} task
  * @param {string} boardId board id
  * @param {string} taskId task id
  * @param {object.<string, task>} data
- * @returns {function(string, string, object.<string, task>): Task} updated Task instance
+ * @returns {Promise.<Task>} Promise which resolved with updated Task instance
  */
 const update = async (boardId, taskId, data) =>
   updateTask(boardId, taskId, data);
@@ -43,7 +44,7 @@ const update = async (boardId, taskId, data) =>
  * This function run deleteTaskById() and return Task index in DB
  * @param {string} boardId board id
  * @param {*} taskId task id
- * @returns {function(string, string): number} index of Task in DB before delete
+ * @returns {Promise.<number>} Promise which resolved with index of Task in DB before delete
  */
 const deleteTask = async (boardId, taskId) => deleteTaskById(boardId, taskId);
 

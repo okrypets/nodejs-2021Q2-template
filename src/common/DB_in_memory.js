@@ -37,6 +37,7 @@ const createUser = (data) => {
 
 /**
  * This function find User in DB by id and update the data those passed in data param and return updated User
+ * @typedef {{name: string, login: string, password: string}} user
  * @param {string} id user id
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {User} Updated User
@@ -104,6 +105,8 @@ const createBoard = (data) => {
 
 /**
  * This function find Board in DB by id and update the data those passed in data param and return updated Board
+ * @typedef {{title: string, columns: Array.<column>}} board
+ * @typedef {{title: string, order: number}} column
  * @param {string} id board id
  * @param {object.<string, board>} data object with keys and value to update Board data by keys
  * @returns {Board} Updated Board
@@ -174,6 +177,7 @@ const createTask = (boardId, data) => {
 /**
  * This function find Task by task ID and assined to the Board by boardId, update the data those passed in data param and return updated Board
  * or return false if there is no Task found
+ * @typedef {{title: string, order: number, description: string, userId: string, boardId: string, columnId: string}} task
  * @param {string} boardId board id
  * @param {string} taskId task id
  * @param {object.<string, task>} data object with keys and value to update Task data by keys

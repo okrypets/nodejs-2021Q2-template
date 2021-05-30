@@ -7,7 +7,7 @@ class User {
   /**
    * Constuctor of class User
    * @constructor
-   * @typedef {{id: string, name: string, login: string, password: string}} user
+   * @typedef {{name: string, login: string, password: string}} user
    * @param {object.<string, user>} object with User data
    */
   constructor({

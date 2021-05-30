@@ -8,8 +8,8 @@ class Board {
   /**
    * Constructor of class Board
    * @constructor
-   * @typedef {{id: string, title: string, columns: Array.<column>}} board
-   * @typedef {{id: string, title: string, order: number}} column
+   * @typedef {{title: string, columns: Array.<column>}} board
+   * @typedef {{title: string, order: number}} column
    * @param {object.<string, board>} object with Task data
    */
   constructor({ id = v4(), title = 'Board', columns = [] } = {}) {

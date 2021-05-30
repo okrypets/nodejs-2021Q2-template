@@ -22,6 +22,7 @@ const create = (data) => usersRepo.create(data);
 
 /**
  * This function return result of run update()
+ * @typedef {{name: string, login: string, password: string}} user
  * @param {string} userId user id
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {function(string, object.<string, user>): User} Updated User

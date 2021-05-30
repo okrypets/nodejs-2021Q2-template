@@ -22,6 +22,8 @@ const create = (data) => boardsRepo.create(data);
 
 /**
  * This function return result of update()
+ * @typedef {{title: string, columns: Array.<column>}} board
+ * @typedef {{title: string, order: number}} column
  * @param {string} id board id
  * @param {object.<string, board>} data object with keys and value to update Task data by keys
  * @returns {function(string, object.<string, board>): Board} Updated Board instance

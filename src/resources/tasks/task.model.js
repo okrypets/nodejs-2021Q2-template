@@ -8,7 +8,7 @@ class Task {
   /**
    * Constuctor of class Task
    * @constructor
-   * @typedef {{id: string, title: string, order: number, description: string, userId: string, boardId: string, columnId: string}} task
+   * @typedef {{title: string, order: number, description: string, userId: string, boardId: string, columnId: string}} task
    * @param {object.<string, task>} object with Task data
    */
   constructor({
