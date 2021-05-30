@@ -24,10 +24,8 @@ export interface IUpdateBoardData {
  */
 class Board implements IBoard {
   readonly id: string;
-
   title: string;
-
-  columns: any;
+  columns: IColumn[];
 
   /**
    * Constructor of class Board
