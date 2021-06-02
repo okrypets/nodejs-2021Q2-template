@@ -6,13 +6,19 @@ import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
-import morgan from 'morgan';
-import { createWriteStream } from 'fs';
+import fs from 'fs';
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
+
+process.on('uncaughtException', (err, origin) => {
+  fs.writeSync(
+    process.stderr.fd,
+    `Caught exception: ${err}\n` + `Exception origin: ${origin}`
+  );
+});
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
@@ -23,31 +29,6 @@ app.use('/', (req, res, next) => {
   }
   next();
 });
-
-const extractParams = (req, res, next, ids) => {
-  const [taskId, boardId, userId] = ids;
-  req.taskId = taskId;
-  req.boardId = boardId;
-  req.userId = userId;
-  next();
-};
-
-app.param(['taskId', 'boardId', 'userId'], extractParams);
-
-morgan.token('userId', (req) => req.params['userId']);
-morgan.token('boardId', (req) => req.params['boardId']);
-morgan.token('taskId', (req) => req.params['taskId']);
-morgan.token('body', (req) => JSON.stringify(req.body));
-morgan.token('query', (req) => JSON.stringify(req.query));
-
-app.use(
-  morgan(
-    ':method: :url status::status body::body params:[userId::userId boardId::boardId taskId::taskId] query:[:query]',
-    {
-      stream: createWriteStream('request.log', { flags: 'a' }),
-    }
-  )
-);
 
 app.use('/users', userRouter);
 
