@@ -3,7 +3,7 @@ import express = require('express');
 import Board from './board.model';
 import boardsService from './board.service';
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 router.route('/').get(async (_: Request, res: Response) => {
   const boards = await boardsService.getAll();

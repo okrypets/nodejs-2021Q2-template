@@ -1,15 +1,21 @@
-import {Request, Response, NextFunction} from 'express'
+import {Request, Response, NextFunction} from 'express';
 import express = require('express');
 import User from './user.model';
 import usersService from './user.service';
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
-router.route('/').get(async (_: Request, res: Response) => {
-  const users = await usersService.getAll();
-  if (users instanceof Array) {
-    res.json(users.map(User.toResponse));
-  }  
+router.route('/').get(async (_req: Request, res: Response, next: NextFunction) => {
+  try {
+    const users = await usersService.getAll();
+    if (users instanceof Array) {
+      res.json(users.map(User.toResponse));
+    }
+  } catch (e) {
+  console.error(e)
+  next(e)
+  }
+    
 });
 
 router.route('/:userId').get(async (req: Request, res: Response, next: NextFunction) => {

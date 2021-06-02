@@ -3,9 +3,9 @@ import express = require('express');
 import Task from './task.model';
 import tasksService from './task.service';
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
-router.route('/:boardId/tasks').get(async (req: Request, res: Response, next: NextFunction) => {
+router.route('/').get(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && typeof req.params["boardId"] === "string") {
     const { boardId } = req.params;
     const tasks = await tasksService.getAllByBoardId(boardId);
@@ -14,7 +14,7 @@ router.route('/:boardId/tasks').get(async (req: Request, res: Response, next: Ne
   
 });
 
-router.route('/:boardId/tasks/:taskId').get(async (req: Request, res: Response, next: NextFunction) => {
+router.route('/:taskId').get(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && req.params["taskId"] && typeof req.params["boardId"] === "string" && typeof req.params["taskId"] === "string") {
     const { boardId, taskId } = req.params;
     const task = await tasksService.get(boardId, taskId);
@@ -25,7 +25,7 @@ router.route('/:boardId/tasks/:taskId').get(async (req: Request, res: Response, 
   
 });
 
-router.route('/:boardId/tasks').post(async (req: Request, res: Response, next: NextFunction) => {
+router.route('/').post(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && typeof req.params["boardId"] === "string") {
     const { boardId } = req.params;
   const task = await tasksService.create(boardId, req.body);
@@ -34,7 +34,7 @@ router.route('/:boardId/tasks').post(async (req: Request, res: Response, next: N
   
 });
 
-router.route('/:boardId/tasks/:taskId').put(async (req: Request, res: Response, next: NextFunction) => {
+router.route('/:taskId').put(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && req.params["taskId"] && typeof req.params["boardId"] === "string" && typeof req.params["taskId"] === "string") {
     const { boardId, taskId } = req.params;
     const task = await tasksService.update(boardId, taskId, req.body);
@@ -45,7 +45,7 @@ router.route('/:boardId/tasks/:taskId').put(async (req: Request, res: Response, 
  
 });
 
-router.route('/:boardId/tasks/:taskId').delete(async (req: Request, res: Response, next: NextFunction) => {
+router.route('/:taskId').delete(async (req: Request, res: Response, next: NextFunction) => {
   if (req.params && req.params["boardId"] && req.params["taskId"] && typeof req.params["boardId"] === "string" && typeof req.params["taskId"] === "string") {
     const { boardId, taskId } = req.params;
   const isOk = await tasksService.deleteTask(boardId, taskId);
