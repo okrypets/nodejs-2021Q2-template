@@ -43,4 +43,4 @@ router.route('/:boardId').all(logger).delete(async (req: Request, res: Response,
   
 });
 
-module.exports = router;
+export default router;

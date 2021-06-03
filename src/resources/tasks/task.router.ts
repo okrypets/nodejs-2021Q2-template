@@ -56,4 +56,4 @@ router.route('/:taskId').all(logger).delete(async (req: Request, res: Response, 
   } else next()  
 });
 
-module.exports = router;
+export default router;

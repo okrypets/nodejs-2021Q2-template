@@ -56,4 +56,4 @@ router.route('/:userId').all(logger).delete(async (req: Request, res: Response, 
   
 });
 
-module.exports = router;
+export default router;
