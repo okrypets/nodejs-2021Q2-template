@@ -1,1 +1,0 @@
-POST: /boards status:201 body:{} params:[userId:- boardId:- taskId:-] query:[{}]

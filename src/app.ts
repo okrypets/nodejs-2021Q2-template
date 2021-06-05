@@ -1,23 +1,19 @@
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
+import { errorLogger } from "./middleware/index";
 
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
-import fs from 'fs';
 
-process.on('uncaughtException', (err: Error, origin: string) => {
-  fs.writeSync(
-    process.stderr.fd,
-    `Caught exception: ${err}\n` +
-    `Exception origin: ${origin}`
-  );
+process.on('uncaughtException', (err: Error, origin: string) => {  
+  errorLogger(`${origin}: ${err.message}`)
 });
 
-process.on('unhandledRejection', (reason: Error, promise: Promise<Error>):void => {
-  console.error('Unhandled Rejection at: Promise', promise, 'reason:', reason.message);
+process.on('unhandledRejection', (reason: Error ):void => {
+  errorLogger(`unhandledRejection at Promise with reason: ${reason.message}`)
 });
 
 const app = express();

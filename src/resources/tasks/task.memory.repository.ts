@@ -41,6 +41,6 @@ const update = async (boardId: string, taskId: string, data: IUpdateTaskData): P
  * @param {*} taskId task id
  * @returns {Promise.<number>} Promise which resolved with index of Task in DB before delete
  */
-const deleteTask = async (boardId: string, taskId: any): Promise<number> => deleteTaskById(boardId, taskId);
+const deleteTask = async (boardId: string, taskId: string): Promise<number> => deleteTaskById(boardId, taskId);
 
 export default { getAll, get, create, update, deleteTask };
