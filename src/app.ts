@@ -3,10 +3,11 @@ import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
 import { errorLogger } from "./middleware/index";
 
-import express from 'express';
+import express, {Request, Response, NextFunction} from 'express';
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
+import { handleError, ErrorHandler } from './common/ErrorHandler';
 
 process.on('uncaughtException', (err: Error, origin: string) => {  
   errorLogger(`${origin}: ${err.message}`)
@@ -36,5 +37,21 @@ app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 
 app.use('/boards/:boardId/tasks', taskRouter);
+
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
+ if (err instanceof ErrorHandler) {
+    handleError(err, req, res)
+} else {
+  const statusCode = 500
+  const message =  "Internal server error"
+  res.status(statusCode).json({
+    status: "error",
+    statusCode,
+    message
+  });
+  errorLogger(`${statusCode} ${message}`)
+}
+})
 
 export default app;

@@ -5,7 +5,7 @@ export interface IUser {
   name: string;
   login: string;
   password?: string;
-  update?: (data: IUpdateUserData) => void;
+  update: (data: IUpdateUserData) => void;
   toResponse?: (user: IUser) =>IUpdateUserData;  
 }
 
@@ -15,18 +15,20 @@ export interface IUpdateUserData {
   password?: string,
 }
 
+export interface IUserDTO {
+  id: string;
+  name: string,
+  login: string,
+}
+
 /**
  * Class creates an User.
  * @class
  */
-class User implements IUser {
-  
+class User {  
   readonly id: string;
-
   name: string;
-
   login: string;
-
   password: string;
 
   /**
@@ -52,7 +54,7 @@ class User implements IUser {
    * @param {User} user User instance
    * @returns {User} User without password
    */
-  static toResponse(user: IUser): IUser {
+  static toResponse(user: IUser): IUserDTO {
     const { id, name, login } = user;
     return { id, name, login };
   }

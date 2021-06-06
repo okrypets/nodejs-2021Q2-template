@@ -9,7 +9,7 @@ export interface IBoard {
   id: string;
   title: string;
   columns: IColumn[];
-  update?: (data: IUpdateBoardData) => void;
+  update: (data: IUpdateBoardData) => void;
   toResponse?: (user: IBoard) =>IUpdateBoardData; 
 }
 
@@ -23,6 +23,7 @@ export interface IUpdateBoardData {
  * @class
  */
 class Board implements IBoard {
+  
   readonly id: string;
   title: string;
   columns: IColumn[];

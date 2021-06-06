@@ -1,6 +1,7 @@
 import User, { IUser, IUpdateUserData } from '../resources/users/user.model';
 import Board, { IBoard, IUpdateBoardData } from '../resources/boards/board.model';
 import Task, { ITask, IUpdateTaskData } from '../resources/tasks/task.model';
+import { ErrorHandler } from './ErrorHandler';
 
 const DBUsers: IUser[] = [];
 const DBTasks: ITask[] = [];
@@ -24,10 +25,10 @@ export const getUsers = (): IUser[] => DB.users;
  * @param {string} id user id
  * @returns {User} Found User
  */
-export const getUser = (id:string): IUser | boolean => {
+export const getUser = (id:string): IUser => {
   const user = DB.users.find((it: IUser) => it.id === id);
   if (!user) {
-    return false;
+    throw new ErrorHandler(404, `User with id: ${id} not found`);
   } 
   return user;
 };
@@ -50,14 +51,11 @@ export const createUser = (data: IUser): IUser => {
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {User} Updated User
  */
-export const updateUser = (id: string, data: IUpdateUserData): IUser | boolean => {
+export const updateUser = (id: string, data: IUpdateUserData): IUser => {
   const user = getUser(id);
-  if (typeof user !== "boolean" && user.update) {
-    user.update(data);
-    const updatedUser = getUser(id);
-    return updatedUser;
-  } 
-  return false
+  user.update(data);
+  const updatedUser = getUser(id);
+  return updatedUser;
 };
 
 /**
@@ -67,19 +65,19 @@ export const updateUser = (id: string, data: IUpdateUserData): IUser | boolean =
  * @param {string} id user id
  * @returns {number} Index that the User had in the DB
  */
-export const deleteUserById = (id: string): number => {
+export const deleteUserById = (id: string): void => {
   const userIndex = DB.users.findIndex((user: IUser) => user.id === id);
-if (userIndex === -1) return userIndex;
+  if (userIndex === -1) {
+    throw new ErrorHandler(404, `User with id: ${id} not found`);
+  }
 
   DB.users.splice(userIndex, 1);
   DB.tasks.map((task: ITask) => {
-    if (task.userId === id && task.update) {
+    if (task.userId === id) {
       task.update({ userId: null });
     }
     return task;
   });
-
-  return userIndex;
 };
 
 /**
@@ -93,10 +91,10 @@ export const getBoards = (): IBoard[] => DB.boards;
  * @param {string} id board id
  * @returns {Board} Found Board
  */
-export const getBoard = (id: string): IBoard | boolean => {
+export const getBoard = (id: string): IBoard => {
   const board = DB.boards.find((it: IBoard) => it.id === id);
   if (!board) {
-    return false;
+    throw new ErrorHandler(404, `Board with id: ${id} not found`);
   } 
   return board;
 };
@@ -121,13 +119,11 @@ export const createBoard = (data: IBoard): IBoard => {
  * @param {object.<string, board>} data object with keys and value to update Board data by keys
  * @returns {Board} Updated Board
  */
-export const updateBoard = (id: string, data: IUpdateBoardData): IBoard | boolean => {
+export const updateBoard = (id: string, data: IUpdateBoardData): IBoard => {
   const board = getBoard(id);
-  if (typeof board !== "boolean" && board.update) {
-    board.update(data);
-    const updatedBoard = getBoard(id);
-    return updatedBoard;
-  } return false
+  board.update(data);
+  const updatedBoard = getBoard(id);
+  return updatedBoard;
 };
 
 /**
@@ -137,16 +133,15 @@ export const updateBoard = (id: string, data: IUpdateBoardData): IBoard | boolea
  * @param {string} id board id
  * @returns {number} index that the Board had in the DB.
  */
-export const deleteBoardById = (id: string): number => {
+export const deleteBoardById = (id: string): void => {
   const boardIndex = DB.boards.findIndex((board: IBoard) => board.id === id);
 
   if (boardIndex === -1) {
-    return boardIndex;
+    throw new ErrorHandler(404, `Board with id: ${id} not found`);
   }
   DB.boards.splice(boardIndex, 1)
   const filteredTasks = DB.tasks.filter(it => it.boardId !== id)
   DB.tasks = filteredTasks
-  return boardIndex;
 };
 
 /**
@@ -162,9 +157,11 @@ export const getTasks = (boardId: string): ITask[] => DB.tasks.filter((task:ITas
  * @param {string} taskId task id
  * @returns {Task|boolean} Found task or false if there is no borad with id === boardId
  */
-export const getTask = (boardId: string, taskId: string): ITask | boolean => {
+export const getTask = (boardId: string, taskId: string): ITask => {
   const task = DB.tasks.find((it:ITask) => it.id === taskId && it.boardId === boardId);
-  if (!task) return false
+  if (!task) { 
+    throw new ErrorHandler(404, `Task with id: ${taskId} not found`);
+  }
   return task;
 };
 
@@ -189,12 +186,12 @@ export const createTask = (boardId: string, data: ITask): ITask => {
  * @param {object.<string, task>} data object with keys and value to update Task data by keys
  * @returns {Task|boolean} return updated Board or false if there is no Task found
  */
-export const updateTask = (boardId: string, taskId: string, data: IUpdateTaskData): ITask | boolean => {
+export const updateTask = (boardId: string, taskId: string, data: IUpdateTaskData): ITask => {
   const task = getTask(boardId, taskId)
-  if (!task || typeof task === "boolean") {
-    return false;
+  if (!task) {
+    throw new ErrorHandler(404, `Task with id: ${taskId} not found`);
   } 
-  if (task.update ) task.update(data);
+  task.update(data);
   const updatedTask = getTask(boardId, taskId)
   return updatedTask;
 };
@@ -205,14 +202,12 @@ export const updateTask = (boardId: string, taskId: string, data: IUpdateTaskDat
  * @param {string} taskId task id
  * @returns {number} index that the Task had in the DB.
  */
-export const deleteTaskById = (boardId: string, taskId: string): number => {
-  const taskIndex = DB.tasks.findIndex((task:ITask) => task.id === taskId && task.boardId === boardId)
-  
+export const deleteTaskById = (boardId: string, taskId: string): void => {
+  const taskIndex = DB.tasks.findIndex((task:ITask) => task.id === taskId && task.boardId === boardId);  
   if (taskIndex === -1) {
-    return taskIndex;
+    throw new ErrorHandler(404, `Task with id: ${taskId} not found`);
   }
   DB.tasks.splice(taskIndex, 1);
-  return taskIndex;
 };
 
 export default {

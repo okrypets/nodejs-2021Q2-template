@@ -12,7 +12,7 @@ const getAll = async (): Promise<IUser[]> => usersRepo.getAll();
  * @param {string} id user id
  * @returns {function(string): User} Found User
  */
-const get = async (id: string): Promise<IUser | boolean> => usersRepo.get(id);
+const get = async (id: string): Promise<IUser> => usersRepo.get(id);
 
 /**
  * This function return result of run create()
@@ -28,13 +28,13 @@ const create = async (data: IUser): Promise<IUser> => usersRepo.create(data);
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {function(string, object.<string, user>): User} Updated User
  */
-const update = async (userId: string, data: IUpdateUserData): Promise<IUser |  boolean> => usersRepo.update(userId, data);
+const update = async (userId: string, data: IUpdateUserData): Promise<IUser> => usersRepo.update(userId, data);
 
 /**
  * This function return result of run deleteUser()
  * @param {string} userId
  * @returns {function(string): number} index that has User in DB
  */
-const deleteUser = async (userId: string): Promise<number> => usersRepo.deleteUser(userId);
+const deleteUser = async (userId: string): Promise<void> => usersRepo.deleteUser(userId);
 
 export default { getAll, get, create, update, deleteUser };
