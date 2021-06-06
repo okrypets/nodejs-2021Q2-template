@@ -1,21 +1,6 @@
-error: GET:http://localhost:4000/boards/e4dce215-a3e8-4d77-a6d3-8fbefd88eb47/tasks/c8f74de3-4063-4591-833c-c46ea6c9f4eb 404 message:Task with id: c8f74de3-4063-4591-833c-c46ea6c9f4eb not found
-error: GET:http://localhost:4000/boards/5616664a-a735-4d11-ac70-ce23e7b5bae7 404 message:Board with id: 5616664a-a735-4d11-ac70-ce23e7b5bae7 not found
-error: GET:http://localhost:4000/boards/ee9c3a71-0da6-4346-9d29-cd9e9287f602/tasks/4c80b80a-760c-48b4-afb9-f4843d425ea4 404 message:Task with id: 4c80b80a-760c-48b4-afb9-f4843d425ea4 not found
-error: GET:http://localhost:4000/boards/ee9c3a71-0da6-4346-9d29-cd9e9287f602/tasks/8db0bbdc-d288-47c5-8057-f264ab874424 404 message:Task with id: 8db0bbdc-d288-47c5-8057-f264ab874424 not found
-error: GET:http://localhost:4000/boards/ee9c3a71-0da6-4346-9d29-cd9e9287f602/tasks/5f7879e7-b67b-4617-b5a9-5faa91fcb8f6 404 message:Task with id: 5f7879e7-b67b-4617-b5a9-5faa91fcb8f6 not found
-error: GET:http://localhost:4000/boards/ee9c3a71-0da6-4346-9d29-cd9e9287f602/tasks/87ce8a6d-b347-4c80-93d8-097a3275e162 404 message:Task with id: 87ce8a6d-b347-4c80-93d8-097a3275e162 not found
-error: GET:http://localhost:4000/boards/ee9c3a71-0da6-4346-9d29-cd9e9287f602/tasks/adde900a-5fb7-4f68-b40a-923511370e7f 404 message:Task with id: adde900a-5fb7-4f68-b40a-923511370e7f not found
-error: GET:http://localhost:4000/boards/1b1d5a9d-3f15-4bdc-b21f-8e1e1080cc59 404 message:Board with id: 1b1d5a9d-3f15-4bdc-b21f-8e1e1080cc59 not found
-error: GET:http://localhost:4000/boards/be5bb9da-0e85-4e74-a926-8ae6c5b54e82/tasks/5333c132-b757-41bd-8188-c81b0f8d4e94 404 message:Task with id: 5333c132-b757-41bd-8188-c81b0f8d4e94 not found
-error: GET:http://localhost:4000/boards/be5bb9da-0e85-4e74-a926-8ae6c5b54e82/tasks/ba400cf9-ecf9-4687-a669-3a3458aa5906 404 message:Task with id: ba400cf9-ecf9-4687-a669-3a3458aa5906 not found
-error: GET:http://localhost:4000/boards/be5bb9da-0e85-4e74-a926-8ae6c5b54e82/tasks/02659719-7a13-4000-a2c1-952cc58ecbc6 404 message:Task with id: 02659719-7a13-4000-a2c1-952cc58ecbc6 not found
-error: GET:http://localhost:4000/boards/be5bb9da-0e85-4e74-a926-8ae6c5b54e82/tasks/67b52dca-edd8-4ad7-92f4-0d7e6f7d7fcd 404 message:Task with id: 67b52dca-edd8-4ad7-92f4-0d7e6f7d7fcd not found
-error: GET:http://localhost:4000/boards/be5bb9da-0e85-4e74-a926-8ae6c5b54e82/tasks/7592ba16-f1d1-4fe0-92a3-95bfa4b9e497 404 message:Task with id: 7592ba16-f1d1-4fe0-92a3-95bfa4b9e497 not found
-error: GET:http://localhost:4000/boards/36f3aec8-c69d-461d-950e-99994e012632/tasks/831c74e6-94c7-43bd-b2ce-583b67e3feeb 404 message:Task with id: 831c74e6-94c7-43bd-b2ce-583b67e3feeb not found
-error: GET:http://localhost:4000/boards/3676c6c1-d8dc-4423-b443-c10aa827f111 404 message:Board with id: 3676c6c1-d8dc-4423-b443-c10aa827f111 not found
-error: GET:http://localhost:4000/boards/524d27ce-6075-4beb-870b-ee6a21ad983d/tasks/1ce4d476-267f-4220-9a73-61d49c21d6c5 404 message:Task with id: 1ce4d476-267f-4220-9a73-61d49c21d6c5 not found
-error: GET:http://localhost:4000/boards/524d27ce-6075-4beb-870b-ee6a21ad983d/tasks/e06dd66d-86bf-4fc8-865a-fe205890c944 404 message:Task with id: e06dd66d-86bf-4fc8-865a-fe205890c944 not found
-error: GET:http://localhost:4000/boards/524d27ce-6075-4beb-870b-ee6a21ad983d/tasks/37ba8421-1a03-4207-94a0-8078851f1d02 404 message:Task with id: 37ba8421-1a03-4207-94a0-8078851f1d02 not found
-error: GET:http://localhost:4000/boards/524d27ce-6075-4beb-870b-ee6a21ad983d/tasks/a431b2c9-66d8-4e01-8515-b4a6f50535cb 404 message:Task with id: a431b2c9-66d8-4e01-8515-b4a6f50535cb not found
-error: GET:http://localhost:4000/boards/524d27ce-6075-4beb-870b-ee6a21ad983d/tasks/dd3ac080-5eff-4797-b660-4581bfee7ee7 404 message:Task with id: dd3ac080-5eff-4797-b660-4581bfee7ee7 not found
-error: GET:http://localhost:4000/boards/a8bd8795-e776-4a9f-a73e-c730442b4c07/tasks/9773bd27-6ef3-4862-8f49-f59870345130 404 message:Task with id: 9773bd27-6ef3-4862-8f49-f59870345130 not found
+error: uncaughtException: Oops!
+error: uncaughtException: Oops!
+error: uncaughtException: Oops!
+error: uncaughtException: Oops!
+error: uncaughtException: Oops!
+error: unhandledRejection at Promise with reason: Oops!

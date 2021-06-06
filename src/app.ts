@@ -9,14 +9,6 @@ import path from 'path';
 import YAML from 'yamljs';
 import { handleError, ErrorHandler } from './common/ErrorHandler';
 
-process.on('uncaughtException', (err: Error, origin: string) => {  
-  errorLogger(`${origin}: ${err.message}`)
-});
-
-process.on('unhandledRejection', (reason: Error ):void => {
-  errorLogger(`unhandledRejection at Promise with reason: ${reason.message}`)
-});
-
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
@@ -53,5 +45,13 @@ app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
   errorLogger(`${statusCode} ${message}`)
 }
 })
+
+process.on('uncaughtException', (err: Error, origin: string) => {  
+  errorLogger(`${origin}: ${err.message}`);
+});
+
+process.on('unhandledRejection', (reason: Error ):void => {
+  errorLogger(`unhandledRejection at Promise with reason: ${reason.message}`)
+});
 
 export default app;
