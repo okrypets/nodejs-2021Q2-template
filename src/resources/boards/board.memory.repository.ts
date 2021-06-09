@@ -12,7 +12,7 @@ const getAll = (): IBoard[] => getBoards();
  * @param {string} id board id
  * @returns {Promise.<Board>} Promise which resolved with Board instance
  */
-const get = (id: string): IBoard => getBoard(id);
+const get = async (id: string): Promise<IBoard|null> => getBoard(id);
 
 /**
  * This function run createBoard() and return created Board
@@ -29,13 +29,13 @@ const create = (data: IBoard): IBoard => createBoard(data);
  * @param {object.<string, board>} data object with keys and value to update Task data by keys
  * @returns {Promise.<Board>} Promise which resolved with updated Board instance
  */
-const update = (id: string, data: IUpdateBoardData): IBoard => updateBoard(id, data);
+const update = async (id: string, data: IUpdateBoardData): Promise<IBoard|null> => updateBoard(id, data);
 
 /**
  * This function run deleteBoardById() and return index of Board in DB
  * @param {string} id board id
  * @returns {Promise.<number>} Promise which resolved with index that has Board in DB
  */
-const deleteBoard = (id: string): void => deleteBoardById(id);
+const deleteBoard = async (id: string): Promise<number> => deleteBoardById(id);
 
 export default { getAll, get, create, update, deleteBoard };

@@ -4,3 +4,77 @@ error: uncaughtException: Oops!
 error: uncaughtException: Oops!
 error: uncaughtException: Oops!
 error: unhandledRejection at Promise with reason: Oops!
+info: POST:http://localhost:4000/boards 201 body:{"title":"Autotest board","columns":[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]} params:{} query:{}
+info: POST:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks 201 body:{"title":"Autotest task","order":0,"description":"Lorem ipsum","userId":null,"boardId":null,"columnId":null} params:{} query:{}
+info: GET:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/feac8858-e0a3-4936-b2f1-9b9209c03e74 200 body:{} params:{} query:{}
+info: POST:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks 201 body:{"title":"Autotest task","order":0,"description":"Lorem ipsum","userId":null,"boardId":null,"columnId":null} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/aed5a667-2e54-4e99-bab8-d74275325680 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks 201 body:{"title":"Autotest task","order":0,"description":"Lorem ipsum","userId":null,"boardId":null,"columnId":null} params:{} query:{}
+info: PUT:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/c8355c6c-28c2-4ee9-af00-b75bb1b39372 200 body:{"id":"c8355c6c-28c2-4ee9-af00-b75bb1b39372","title":"Autotest updated task","order":0,"description":"Lorem ipsum","userId":null,"boardId":"6156b1c1-633d-456e-8cf0-3d0c3cd7cb43","columnId":null} params:{} query:{}
+info: GET:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/c8355c6c-28c2-4ee9-af00-b75bb1b39372 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/feac8858-e0a3-4936-b2f1-9b9209c03e74 200 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/feac8858-e0a3-4936-b2f1-9b9209c03e74 204 body:{} params:{} query:{}
+error: GET:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/feac8858-e0a3-4936-b2f1-9b9209c03e74 404 message:Task with id: feac8858-e0a3-4936-b2f1-9b9209c03e74 not found
+info: GET:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43/tasks/feac8858-e0a3-4936-b2f1-9b9209c03e74 404 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/6156b1c1-633d-456e-8cf0-3d0c3cd7cb43 204 body:{} params:{} query:{}
+info: GET:http://localhost:4000/users 200 body:{} params:{} query:{}
+info: POST:http://localhost:4000/users 201 body:{"name":"TEST_USER","login":"test_user","password":"T35t_P@55w0rd"} params:{} query:{}
+info: GET:http://localhost:4000/users/beb70521-3bfe-4f33-bafa-3b2a26e8d54c 200 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/users/beb70521-3bfe-4f33-bafa-3b2a26e8d54c 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/users 201 body:{"name":"TEST_USER","login":"test_user","password":"T35t_P@55w0rd"} params:{} query:{}
+info: DELETE:http://localhost:4000/users/6e6a9deb-7d6a-4c16-a32d-520acfb90429 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/users 201 body:{"name":"TEST_USER","login":"test_user","password":"T35t_P@55w0rd"} params:{} query:{}
+info: PUT:http://localhost:4000/users/7e4afac3-541c-47d8-825f-052c5c22583b 200 body:{"name":"Autotest updated TEST_USER","login":"test_user","password":"T35t_P@55w0rd","id":"7e4afac3-541c-47d8-825f-052c5c22583b"} params:{} query:{}
+info: GET:http://localhost:4000/users/7e4afac3-541c-47d8-825f-052c5c22583b 200 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/users/7e4afac3-541c-47d8-825f-052c5c22583b 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/users 201 body:{"name":"TEST_USER","login":"test_user","password":"T35t_P@55w0rd"} params:{} query:{}
+info: DELETE:http://localhost:4000/users/64d69130-73c0-406a-b321-0764d9a6d3a3 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/users 201 body:{"name":"TEST_USER","login":"test_user","password":"T35t_P@55w0rd"} params:{} query:{}
+info: POST:http://localhost:4000/boards 201 body:{"title":"Autotest board","columns":[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]} params:{} query:{}
+info: POST:http://localhost:4000/boards/1b7ab2b6-dce1-4b34-b820-8d30657d4a4c/tasks 201 body:{"title":"Task #1","order":1,"description":"Lorem ipsum","userId":"7d6ab9ee-99b9-4f6d-aa6b-e27590959d5f","boardId":"1b7ab2b6-dce1-4b34-b820-8d30657d4a4c"} params:{} query:{}
+info: POST:http://localhost:4000/boards/1b7ab2b6-dce1-4b34-b820-8d30657d4a4c/tasks 201 body:{"title":"Task #2","order":2,"description":"Lorem ipsum","userId":"7d6ab9ee-99b9-4f6d-aa6b-e27590959d5f","boardId":"1b7ab2b6-dce1-4b34-b820-8d30657d4a4c"} params:{} query:{}
+info: DELETE:http://localhost:4000/users/7d6ab9ee-99b9-4f6d-aa6b-e27590959d5f 204 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/1b7ab2b6-dce1-4b34-b820-8d30657d4a4c/tasks/96058ea6-9916-41b3-844b-486da92ea497 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/1b7ab2b6-dce1-4b34-b820-8d30657d4a4c/tasks/7b4543cb-08cc-42d5-a64f-b406384a7d90 200 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/1b7ab2b6-dce1-4b34-b820-8d30657d4a4c/tasks/96058ea6-9916-41b3-844b-486da92ea497 204 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/1b7ab2b6-dce1-4b34-b820-8d30657d4a4c/tasks/7b4543cb-08cc-42d5-a64f-b406384a7d90 204 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/1b7ab2b6-dce1-4b34-b820-8d30657d4a4c 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/boards 201 body:{"title":"Autotest board","columns":[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]} params:{} query:{}
+info: GET:http://localhost:4000/boards 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/8e045c54-53eb-4bca-8e66-5e8249cf9e4d 200 body:{} params:{} query:{}
+info: POST:http://localhost:4000/boards 201 body:{"title":"Autotest board","columns":[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/1b521b04-accc-43b4-bf9d-cce4eb79030f 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/boards 201 body:{"title":"Autotest board","columns":[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]} params:{} query:{}
+info: PUT:http://localhost:4000/boards/4db3d16b-2b15-440f-a6d2-52492f25b32a 200 body:{"id":"4db3d16b-2b15-440f-a6d2-52492f25b32a","title":"Autotest updated board","columns":[{"title":"Backlog","order":1,"id":"4fa78bd2-6113-4aef-82b1-dcefd85bf4f0"},{"title":"Sprint","order":2,"id":"2dcd3e1a-ddc4-4d49-a50a-9090198090d1"}]} params:{} query:{}
+info: GET:http://localhost:4000/boards/4db3d16b-2b15-440f-a6d2-52492f25b32a 200 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/4db3d16b-2b15-440f-a6d2-52492f25b32a 204 body:{} params:{} query:{}
+info: POST:http://localhost:4000/boards 201 body:{"title":"Autotest board","columns":[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/bf1b22fd-41a0-40e6-ba33-6204019d34c4 204 body:{} params:{} query:{}
+error: GET:http://localhost:4000/boards/bf1b22fd-41a0-40e6-ba33-6204019d34c4 404 message:Board with id: bf1b22fd-41a0-40e6-ba33-6204019d34c4 not found
+info: GET:http://localhost:4000/boards/bf1b22fd-41a0-40e6-ba33-6204019d34c4 404 body:{} params:{} query:{}
+info: POST:http://localhost:4000/boards 201 body:{"title":"Autotest board","columns":[{"title":"Backlog","order":1},{"title":"Sprint","order":2}]} params:{} query:{}
+info: POST:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks 201 body:{"title":"Task #1","order":1,"description":"Lorem ipsum","boardId":"0eae6c47-747e-412d-8dc0-bf7101a26729","userId":null,"columnId":null} params:{} query:{}
+info: POST:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks 201 body:{"title":"Task #2","order":2,"description":"Lorem ipsum","boardId":"0eae6c47-747e-412d-8dc0-bf7101a26729","userId":null,"columnId":null} params:{} query:{}
+info: POST:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks 201 body:{"title":"Task #3","order":3,"description":"Lorem ipsum","boardId":"0eae6c47-747e-412d-8dc0-bf7101a26729","userId":null,"columnId":null} params:{} query:{}
+info: POST:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks 201 body:{"title":"Task #4","order":4,"description":"Lorem ipsum","boardId":"0eae6c47-747e-412d-8dc0-bf7101a26729","userId":null,"columnId":null} params:{} query:{}
+info: POST:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks 201 body:{"title":"Task #5","order":5,"description":"Lorem ipsum","boardId":"0eae6c47-747e-412d-8dc0-bf7101a26729","userId":null,"columnId":null} params:{} query:{}
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/50fa5ffe-35fc-403d-a1a0-d522470aa9f1 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/825cd78e-4243-4d11-92b2-34336fc499ec 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/3e4cc05d-b190-4302-a245-c5bdef44846a 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/c75f5705-18b8-4e20-812b-fd39136235bc 200 body:{} params:{} query:{}
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/ba8d6c8d-5eca-4c39-add6-03cb59338089 200 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729 204 body:{} params:{} query:{}
+error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/50fa5ffe-35fc-403d-a1a0-d522470aa9f1 404 message:Task with id: 50fa5ffe-35fc-403d-a1a0-d522470aa9f1 not found
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/50fa5ffe-35fc-403d-a1a0-d522470aa9f1 404 body:{} params:{} query:{}
+error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/3e4cc05d-b190-4302-a245-c5bdef44846a 404 message:Task with id: 3e4cc05d-b190-4302-a245-c5bdef44846a not found
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/3e4cc05d-b190-4302-a245-c5bdef44846a 404 body:{} params:{} query:{}
+error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/825cd78e-4243-4d11-92b2-34336fc499ec 404 message:Task with id: 825cd78e-4243-4d11-92b2-34336fc499ec not found
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/825cd78e-4243-4d11-92b2-34336fc499ec 404 body:{} params:{} query:{}
+error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/c75f5705-18b8-4e20-812b-fd39136235bc 404 message:Task with id: c75f5705-18b8-4e20-812b-fd39136235bc not found
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/c75f5705-18b8-4e20-812b-fd39136235bc 404 body:{} params:{} query:{}
+error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/ba8d6c8d-5eca-4c39-add6-03cb59338089 404 message:Task with id: ba8d6c8d-5eca-4c39-add6-03cb59338089 not found
+info: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/ba8d6c8d-5eca-4c39-add6-03cb59338089 404 body:{} params:{} query:{}
+info: DELETE:http://localhost:4000/boards/8e045c54-53eb-4bca-8e66-5e8249cf9e4d 204 body:{} params:{} query:{}

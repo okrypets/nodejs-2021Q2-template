@@ -14,7 +14,7 @@ const getAll = (boardId: string): ITask[] => getTasks(boardId);
  * @param {string} taskid task id
  * @returns {Promise.<Task>} Promise which resolved with found Task
  */
-const get = (boardId: string, taskid: string): ITask => getTask(boardId, taskid);
+const get = async (boardId: string, taskid: string): Promise<ITask|null> => getTask(boardId, taskid);
 
 /**
  * This function run createTask() and return crated Task
@@ -32,7 +32,7 @@ const create = (boardId: string, data: ITask): ITask => createTask(boardId, data
  * @param {object.<string, task>} data
  * @returns {Promise.<Task>} Promise which resolved with updated Task instance
  */
-const update = (boardId: string, taskId: string, data: IUpdateTaskData): ITask =>
+const update = async (boardId: string, taskId: string, data: IUpdateTaskData): Promise<ITask|null> =>
   updateTask(boardId, taskId, data);
 
 /**
@@ -41,6 +41,6 @@ const update = (boardId: string, taskId: string, data: IUpdateTaskData): ITask =
  * @param {*} taskId task id
  * @returns {Promise.<number>} Promise which resolved with index of Task in DB before delete
  */
-const deleteTask = (boardId: string, taskId: string): void => deleteTaskById(boardId, taskId);
+const deleteTask = async (boardId: string, taskId: string): Promise<number> => deleteTaskById(boardId, taskId);
 
 export default { getAll, get, create, update, deleteTask };
