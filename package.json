@@ -10,7 +10,7 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon",
+    "dev": "nodemon -L src/",
     "start": "ts-node src/server.ts",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
@@ -84,6 +84,7 @@
     "lint-staged": "10.5.4",
     "nodemon": "2.0.7",
     "prettier": "2.2.1",
+    "snyk": "^1.630.0",
     "supertest": "6.1.3"
   }
 }

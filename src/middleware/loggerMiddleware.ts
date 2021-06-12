@@ -11,8 +11,8 @@ const logger = winston.createLogger({
         stream: process.stderr,
         level: 'debug',
       }),
-      new winston.transports.File({ filename: 'errors.log', level: 'error' }),
-      new winston.transports.File({ filename: 'logging.log', level: "info" }),
+      new winston.transports.File({ filename: '/logs/errors.log', level: 'error' }),
+      new winston.transports.File({ filename: '/logs/logging.log', level: "info" }),
     ],
   });
 
