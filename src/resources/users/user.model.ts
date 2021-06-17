@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+// import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 export interface IUser {
   id: string;
@@ -31,10 +32,15 @@ export interface IUserDTO {
  * Class creates an User.
  * @class
  */
+// @Entity()
 class User {  
+  // @PrimaryGeneratedColumn()
   readonly id: string;
+  // @Column()
   name: string;
+  // @Column()
   login: string;
+  // @Column()
   password: string;
 
   /**
