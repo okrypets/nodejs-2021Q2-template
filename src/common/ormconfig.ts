@@ -20,7 +20,7 @@ export const config = {
     reconnectInterval: 10000,
 
     // entities name should be **.entity.ts
-   //  entities: [__dirname + '/**/*.entity{.ts,.js}'],
+   entities: [__dirname + '/**/*.entity{.ts,.js}'],
 
     // We are using migrations, synchronize should be set to false.
     // synchronize: process.env.TYPEORM_SYNCHRONIZE
