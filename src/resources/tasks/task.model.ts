@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 export interface ITask {
   id: string;
@@ -25,14 +26,21 @@ export interface IUpdateTaskData {
  * class Task
  * @class
  */
+@Entity({name: "task"})
 class Task implements ITask {
-  
+  @PrimaryGeneratedColumn()
   readonly id: string;
+  @Column()
   title: string;
+  @Column()
   order: number;
+  @Column()
   description: string;
+  @Column()
   userId: string | null;
+  @Column()
   boardId: string | null;
+  @Column()
   columnId: string | null;
 
   /**

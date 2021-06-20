@@ -1,4 +1,5 @@
 import { v4 } from 'uuid';
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 export interface IColumn {
   id: string,
   title: string,
@@ -22,10 +23,13 @@ export interface IUpdateBoardData {
  * class Board
  * @class
  */
+@Entity({name: "board"})
 class Board implements IBoard {
-  
+  @PrimaryGeneratedColumn()
   readonly id: string;
+  @Column()
   title: string;
+  @Column()
   columns: IColumn[];
 
   /**

@@ -7,7 +7,7 @@ try {
     await createConnection(config)
     const connection = getConnection();
     if (!connection.isConnected) await connection.connect()
-    console.log("well done")
+    console.log("Database connection established")
 } catch (error) {
     console.error("getConnection failed", error)
 }

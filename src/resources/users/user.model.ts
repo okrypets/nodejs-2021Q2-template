@@ -1,5 +1,5 @@
 import { v4 } from 'uuid';
-// import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 export interface IUser {
   id: string;
@@ -32,15 +32,15 @@ export interface IUserDTO {
  * Class creates an User.
  * @class
  */
-// @Entity()
+@Entity({name: "user"})
 class User {  
-  // @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("increment")
   readonly id: string;
-  // @Column()
+  @Column("varchar", {length: 25})
   name: string;
-  // @Column()
+  @Column("varchar", {length: 25})
   login: string;
-  // @Column()
+  @Column("varchar", {length: 25})
   password: string;
 
   /**
