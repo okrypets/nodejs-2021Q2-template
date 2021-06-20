@@ -28,19 +28,19 @@ export interface IUpdateTaskData {
  */
 @Entity({name: "task"})
 class Task implements ITask {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("increment")
   readonly id: string;
-  @Column()
+  @Column("varchar", {length: 25})
   title: string;
-  @Column()
+  @Column("integer")
   order: number;
-  @Column()
+  @Column("text")
   description: string;
-  @Column()
+  @Column("varchar", {length: 25})
   userId: string | null;
-  @Column()
+  @Column("varchar", {length: 25})
   boardId: string | null;
-  @Column()
+  @Column("varchar", {length: 25})
   columnId: string | null;
 
   /**

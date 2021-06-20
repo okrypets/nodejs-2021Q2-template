@@ -25,11 +25,11 @@ export interface IUpdateBoardData {
  */
 @Entity({name: "board"})
 class Board implements IBoard {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn("increment")
   readonly id: string;
-  @Column()
+  @Column("varchar", {length: 25})
   title: string;
-  @Column()
+  @Column({ type: 'json', nullable: true })
   columns: IColumn[];
 
   /**
