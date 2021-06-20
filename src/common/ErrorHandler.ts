@@ -1,5 +1,5 @@
 import {Response, Request} from 'express';
-import { errorLogger } from "../middleware/index"
+import { loggerMiddleware } from "../middleware/loggerMiddleware";
 
 export class ErrorHandler extends Error {
     statusCode: number;
@@ -21,7 +21,7 @@ export const handleError = (err: ErrorHandler, req: Request, res: Response): voi
       statusCode,
       message
     });
-    errorLogger(log)
+    loggerMiddleware.errorLogger(log);
   };
 
 export default { ErrorHandler,  handleError}

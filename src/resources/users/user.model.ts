@@ -9,6 +9,12 @@ export interface IUser {
   toResponse?: (user: IUser) =>IUpdateUserData;  
 }
 
+export interface IUserDTO {
+  id: string;
+  name: string;
+  login: string;
+}
+
 export interface IUpdateUserData {
   name?: string,
   login?: string,

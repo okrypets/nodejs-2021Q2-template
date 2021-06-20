@@ -1,5 +1,6 @@
 import usersRepo from './user.memory.repository';
 import { IUser, IUpdateUserData } from "./user.model";
+import { ErrorHandler } from '../../middleware/errorHandlerMiddleware';
 
 /**
  * This function return result of run getAll()
@@ -12,7 +13,13 @@ const getAll = async (): Promise<IUser[]> => usersRepo.getAll();
  * @param {string} id user id
  * @returns {function(string): User} Found User
  */
-const get = async (id: string): Promise<IUser> => usersRepo.get(id);
+const get = async (id: string): Promise<IUser|null> => {
+    const user = await usersRepo.get(id);
+    if (user === null) {
+        throw new ErrorHandler(404, `User with id: ${id} not found`);
+      } 
+    return user;
+}
 
 /**
  * This function return result of run create()
@@ -28,13 +35,24 @@ const create = async (data: IUser): Promise<IUser> => usersRepo.create(data);
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {function(string, object.<string, user>): User} Updated User
  */
-const update = async (userId: string, data: IUpdateUserData): Promise<IUser> => usersRepo.update(userId, data);
+const update = async (userId: string, data: IUpdateUserData): Promise<IUser|null> => {
+    const user = await usersRepo.update(userId, data);;
+    if (user === null) {
+        throw new ErrorHandler(404, `User with id: ${userId} not found`);
+      } 
+    return user;  
+}
 
 /**
  * This function return result of run deleteUser()
  * @param {string} userId
  * @returns {function(string): number} index that has User in DB
  */
-const deleteUser = async (userId: string): Promise<void> => usersRepo.deleteUser(userId);
+const deleteUser = async (userId: string): Promise<void> => {
+    const index = await usersRepo.deleteUser(userId);
+    if (index === -1) {
+        throw new ErrorHandler(404, `User with id: ${userId} not found`);
+    }
+}
 
 export default { getAll, get, create, update, deleteUser };

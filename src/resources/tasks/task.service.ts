@@ -1,6 +1,6 @@
 import tasksRepo from './task.memory.repository';
 import Task, { ITask, IUpdateTaskData } from './task.model';
-
+import { ErrorHandler } from '../../middleware/errorHandlerMiddleware';
 
 /**
  * This function return result of run getAll()
@@ -15,7 +15,13 @@ const getAllByBoardId = async (boardId: string): Promise<ITask[]> => tasksRepo.g
  * @param {string} taskid task id
  * @returns {function(string, string): Task|boolean} Task by Id and task id or false if board not find
  */
-const get = async (boardId: string, taskid: string): Promise<ITask> => tasksRepo.get(boardId, taskid);
+const get = async (boardId: string, taskId: string): Promise<ITask|null> => {
+  const task = await tasksRepo.get(boardId, taskId);
+  if (!task) {
+    throw new ErrorHandler(404, `Task with id: ${taskId} not found`);
+  }
+  return task
+}
 
 /**
  * This function return result of run create()
@@ -33,7 +39,13 @@ const create = async (boardId: string, data: Task): Promise<ITask> => tasksRepo.
  * @param {object.<string, task>} data object with keys and value to update Task data by keys
  * @returns {function(string, string, object.<string, task>): Task} updated Task instance
  */
-const update = async(boardId: string, taskId: string, data: IUpdateTaskData): Promise<ITask> => tasksRepo.update(boardId, taskId, data);
+const update = async(boardId: string, taskId: string, data: IUpdateTaskData): Promise<ITask|null> => {
+  const task = await tasksRepo.update(boardId, taskId, data);
+  if (!task) {
+    throw new ErrorHandler(404, `Task with id: ${taskId} not found`);
+  }
+  return task
+}
 
 /**
  *This function return result of run deleteTask()
@@ -41,7 +53,12 @@ const update = async(boardId: string, taskId: string, data: IUpdateTaskData): Pr
  * @param {string} taskId task id
  * @returns {function(string, string): number} index that has Task in DB
  */
-const deleteTask = async (boardId: string, taskId: string): Promise<void> => tasksRepo.deleteTask(boardId, taskId);
+const deleteTask = async (boardId: string, taskId: string): Promise<void> => {
+  const index = await tasksRepo.deleteTask(boardId, taskId);
+  if (index === -1) {
+    throw new ErrorHandler(404, `Task with id: ${taskId} not found`);
+  }
+}
 
 export default {
   getAllByBoardId,

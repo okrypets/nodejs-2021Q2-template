@@ -12,7 +12,7 @@ const getAll = (): IUser[] => getUsers();
  * @param {string} id user id
  * @returns {Promise.<User>} Promise which resolved with user instance
  */
-const get = (id: string): IUser => getUser(id);
+const get = async (id: string): Promise<IUser|null> => getUser(id);
 
 /**
  * this function run createUser() and create new User
@@ -28,13 +28,13 @@ const create = (data: IUser): IUser => createUser(data);
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {Promise.<User>} Promise which resolved with updated User
  */
-const update = (id: string, data: IUpdateUserData): IUser => updateUser(id, data);
+const update = async (id: string, data: IUpdateUserData): Promise<IUser|null> => updateUser(id, data);
 
 /**
  * This function run deleteUserById() and return index that the User had in the DB
  * @param {string} id user id
  * @returns {Promise.<number>} Promise which resolved with index of removed User
  */
-const deleteUser = (id: string): void => deleteUserById(id);
+const deleteUser = async (id: string): Promise<number> => deleteUserById(id);
 
 export default { getAll, get, create, update, deleteUser };

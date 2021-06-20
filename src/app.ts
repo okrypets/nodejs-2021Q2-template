@@ -1,13 +1,13 @@
 import userRouter from './resources/users/user.router';
 import boardRouter from './resources/boards/board.router';
 import taskRouter from './resources/tasks/task.router';
-import { errorLogger } from "./middleware/index";
+import { loggerMiddleware } from './middleware/loggerMiddleware';
+import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware';
 
-import express, {Request, Response, NextFunction} from 'express';
+import express from 'express';
 import swaggerUI from 'swagger-ui-express';
 import path from 'path';
 import YAML from 'yamljs';
-import { handleError, ErrorHandler } from './common/ErrorHandler';
 
 const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -15,6 +15,8 @@ const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+app.use(loggerMiddleware.requestLogger);
 
 app.use('/', (req, res, next) => {
   if (req.originalUrl === '/') {
@@ -30,28 +32,17 @@ app.use('/boards', boardRouter);
 
 app.use('/boards/:boardId/tasks', taskRouter);
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: Error, req: Request, res: Response, _next: NextFunction) => {
- if (err instanceof ErrorHandler) {
-    handleError(err, req, res)
-} else {
-  const statusCode = 500
-  const message =  "Internal server error"
-  res.status(statusCode).json({
-    status: "error",
-    statusCode,
-    message
-  });
-  errorLogger(`${statusCode} ${message}`)
-}
-})
+app.use(errorHandlerMiddleware)
 
 process.on('uncaughtException', (err: Error, origin: string) => {  
-  errorLogger(`${origin}: ${err.message}`);
+  loggerMiddleware.errorLogger(`${origin}: ${err.message}`);
+  setTimeout(() => process.exit(1), 1000);
 });
+// throw Error('Oops!');
 
 process.on('unhandledRejection', (reason: Error ):void => {
-  errorLogger(`unhandledRejection at Promise with reason: ${reason.message}`)
+  loggerMiddleware.errorLogger(`unhandledRejection at Promise with reason: ${reason.message}`)
 });
+// Promise.reject(Error('Oops!'));
 
 export default app;

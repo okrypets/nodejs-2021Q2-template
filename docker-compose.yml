@@ -1,0 +1,45 @@
+version: '3'
+services: 
+    node: 
+        build: .
+        ports: 
+            - ${PORT}:${PORT}
+        depends_on:
+            - postgres
+        environment:
+            - PORT=${PORT}
+        image: okrypets/nodejs
+        volumes: 
+            - ./src:/usr/src/app/src
+            - ./logs:/usr/src/app/logs
+        networks: 
+            - frontend
+            - backend
+        restart: on-failure
+    postgres:
+        build: ./database
+        ports: 
+            - ${POSTGRES_PORT}:${POSTGRES_PORT}
+        environment: 
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+            PGDATA: /var/lib/postgresql/data
+        image: okrypets/postgres
+        networks: 
+            - backend
+        volumes:  
+            - pgdata:/var/lib/postgresql/data
+        restart: on-failure
+volumes: 
+    logs:
+        external: true
+    pgdata:
+        external: true
+networks:
+    frontend: 
+        name: frontend
+        driver: bridge
+    backend: 
+        name: backend
+        driver: bridge
