@@ -1,6 +1,7 @@
 import { getRepository } from "typeorm";
-// import { getUsers, getUser, createUser, updateUser, deleteUserById } from '../../common/DB_in_memory';
-import User, { IUser, IUpdateUserData } from "./user.model"
+import User, { IUser, IUpdateUserData } from "./user.model";
+import Task  from "../tasks/task.model"; //, { ITask } from "../tasks/task.model";
+// import taskDBAction from "../tasks/task.memory.repository";
 
 /**
  * This function run getUsers() and return all Users from DB
@@ -63,7 +64,15 @@ const update = async (id: string, data: IUpdateUserData): Promise<IUser|null> =>
 const deleteUser = async (id: string): Promise<number> => {
     const userRepositary = getRepository(User)
     const user = await userRepositary.delete(id);
-    if (user.affected) return 1;
+    if (user.affected) {
+        await getRepository(Task)
+    .createQueryBuilder()
+    .update()
+    .set({ userId: null })
+    .where(`userId = :userId`, { userId: id })
+    .execute();
+        return 1;
+    };
     return -1 
 };
 

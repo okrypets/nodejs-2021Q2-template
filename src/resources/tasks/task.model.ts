@@ -1,5 +1,7 @@
 import { v4 } from 'uuid';
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import User from "../users/user.model";
+import Board from "../boards/board.model";
 
 export interface ITask {
   id: string;
@@ -36,11 +38,19 @@ class Task implements ITask {
   order: number;
   @Column("text")
   description: string;
-  @Column("varchar", {length: 25})
+  @ManyToOne((_type) => User, (user) => user.tasks)
+  @JoinColumn({ name: 'userId' })
+  user: User | undefined;
+  @Column({ nullable: false })
   userId: string | null;
-  @Column("varchar", {length: 25})
+  @ManyToOne((_type) => Board, (board) => board.tasks, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'boardId' })
+  board: Board | undefined;
+  @Column({nullable: false})
   boardId: string | null;
-  @Column("varchar", {length: 25})
+  @Column("varchar")
   columnId: string | null;
 
   /**
@@ -49,15 +59,14 @@ class Task implements ITask {
    * @typedef {{title: string, order: number, description: string, userId: string, boardId: string, columnId: string}} task
    * @param {object.<string, task>} object with Task data
    */
-  constructor({
-    id = v4(),
-    title = 'TASK',
-    order = 0,
-    description = 'Task about',
-    userId = null,
-    boardId = null,
-    columnId = null,
-  }: ITask) {
+    constructor(taskData: ITask) {
+      const {id = v4(),
+          title = 'TASK',
+          order = 0,
+          description = 'Task about',
+          userId = null,
+          boardId = null,
+          columnId = null} = taskData || {}
     this.id = id;
     this.title = title;
     this.order = order;

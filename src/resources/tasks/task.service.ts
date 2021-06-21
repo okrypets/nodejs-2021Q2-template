@@ -7,7 +7,10 @@ import { ErrorHandler } from '../../middleware/errorHandlerMiddleware';
  * @param {string} boardId board id
  * @returns {function(string): Array.<Task>} Return all Tasks from DB to be assigned to boardId
  */
-const getAllByBoardId = async (boardId: string): Promise<ITask[]> => tasksRepo.getAll(boardId);
+const getAllByBoardId = async (boardId: string): Promise<ITask[]> => {
+  const tasks = await tasksRepo.getAll();
+  return tasks.filter(task => task.boardId === boardId)
+}
 
 /**
  * This function return result of run get()

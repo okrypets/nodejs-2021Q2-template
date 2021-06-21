@@ -1,12 +1,12 @@
-import { config } from "../common/ormconfig"
-import { getConnection, createConnection } from "typeorm"
+import config from "../ormconfig"
+import { getConnection, createConnection } from "typeorm";
 
 const connectToDB = async () => {
 // let connection;
 try {
     await createConnection(config)
     const connection = getConnection();
-    if (!connection.isConnected) await connection.connect()
+    if (!connection.isConnected) await connection.connect();
     console.log("Database connection established")
 } catch (error) {
     console.error("getConnection failed", error)

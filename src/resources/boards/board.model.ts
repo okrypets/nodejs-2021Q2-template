@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import Task from "../tasks/task.model";
 export interface IColumn {
   id: string,
   title: string,
@@ -23,14 +24,18 @@ export interface IUpdateBoardData {
  * class Board
  * @class
  */
-@Entity({name: "board"})
+@Entity()
 class Board implements IBoard {
   @PrimaryGeneratedColumn("increment")
-  readonly id: string;
+  readonly id: string = v4();
   @Column("varchar", {length: 25})
   title: string;
   @Column({ type: 'json', nullable: true })
   columns: IColumn[];
+  @OneToMany((_type) => Task, (task) => task.board, {
+    cascade: true,
+  })
+  tasks: Task[] | undefined;
 
   /**
    * Constructor of class Board
@@ -39,7 +44,8 @@ class Board implements IBoard {
    * @typedef {{title: string, order: number}} column
    * @param {object.<string, board>} object with Task data
    */
-  constructor({ id = v4(), title = 'Board', columns = [] }: IBoard) {
+    constructor(boardData: IBoard) {
+    const { id = v4(), title = 'Board', columns = [] } = boardData || {}
     this.id = id;
     this.title = title;
     this.columns = columns.map((column) => ({ ...column, id: v4() }));

@@ -1,5 +1,6 @@
 import { v4 } from 'uuid';
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import Task from "../tasks/task.model";
 
 export interface IUser {
   id: string;
@@ -42,19 +43,22 @@ class User {
   login: string;
   @Column("varchar", {length: 25})
   password: string;
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  @OneToMany((_type) => Task, (task) => task.userId)
+  tasks: Task[] | undefined;
   /**
    * Constuctor of class User
    * @constructor
    * @typedef {{name: string, login: string, password: string}} user
    * @param {object.<string, user>} object with User data
    */
-  constructor({
-    id = v4(),
-    name = 'USER',
-    login = 'user',
-    password = 'P@55w0rd',
-  }: IUser) {
+  constructor(userData: IUser) {
+    const {
+      id = v4(),
+      name = 'USER',
+      login = 'user',
+      password = 'P@55w0rd',
+    } = userData || {}
     this.id = id;
     this.name = name;
     this.login = login;

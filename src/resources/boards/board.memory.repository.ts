@@ -1,6 +1,8 @@
 // import { getBoards, getBoard, createBoard, updateBoard, deleteBoardById } from '../../common/DB_in_memory';
 import Board, { IBoard, IUpdateBoardData } from "./board.model"
 import { getRepository } from "typeorm";
+import Task from "../tasks/task.model";//, { ITask } from "../tasks/task.model";
+// import taskDBAction from "../tasks/task.memory.repository";
 
 /**
  * This function run getBoards() and return all Boards from DB
@@ -62,9 +64,23 @@ const update = async (id: string, data: IUpdateBoardData): Promise<IBoard|null> 
  */
 // const deleteBoard = async (id: string): Promise<number> => deleteBoardById(id);
 const deleteBoard = async (id: string): Promise<number> => {
-    const boardRepositary = getRepository(Board)
+    const boardRepositary = getRepository(Board);
+
+    await getRepository(Task)
+    .createQueryBuilder()
+    .delete()
+    .where(`boardId = :boardId`, { boardId: id })
+    .execute();
+
     const board = await boardRepositary.delete(id);
-    if (board.affected) return 1;
+    if (board.affected) {
+        // const tasks = await taskDBAction.getAll(id);
+        // const tasksIds = tasks.map((it: ITask) => it.id);
+        // tasksIds.forEach(async (taskId:string) => {
+        //     await taskDBAction.deleteTask(id, taskId) 
+        // });
+        return 1;
+    }
     return -1   
 };
 

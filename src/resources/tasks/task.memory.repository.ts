@@ -8,9 +8,9 @@ import { getRepository } from "typeorm";
  * @returns {Promise.<Array.<Task>>} Promise which resolved with array with all Tasks assigned to boardId
  */
 // const getAll = (boardId: string): ITask[] => getTasks(boardId);
-const getAll = async (boardId: string): Promise<Task[]> => {
+const getAll = async (): Promise<Task[]> => {
   const taskRepositary = getRepository(Task);
-  return taskRepositary.find({ where: { boardId: boardId }})
+  return taskRepositary.find({where: {}})
 }
 
 /**
@@ -36,7 +36,7 @@ const get = async (boardId: string, taskId: string): Promise<Task|null> => {
 // const create = (boardId: string, data: ITask): ITask => createTask(boardId, data);
 const create = async (_boardId: string, data: ITask): Promise<Task> => {
   const taskRepositary = getRepository(Task)
-  const newTask = taskRepositary.create(data);
+  const newTask = taskRepositary.create({...data});
   const savedTask = await taskRepositary.save(newTask);
   return savedTask;
 };
