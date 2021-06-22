@@ -1,5 +1,5 @@
 import tasksRepo from './task.memory.repository';
-import Task, { ITask, IUpdateTaskData } from './task.model';
+import { Task } from "../../entities/task.entity" // './_task.model';
 import { ErrorHandler } from '../../middleware/errorHandlerMiddleware';
 
 /**
@@ -7,9 +7,9 @@ import { ErrorHandler } from '../../middleware/errorHandlerMiddleware';
  * @param {string} boardId board id
  * @returns {function(string): Array.<Task>} Return all Tasks from DB to be assigned to boardId
  */
-const getAllByBoardId = async (boardId: string): Promise<ITask[]> => {
-  const tasks = await tasksRepo.getAll();
-  return tasks.filter(task => task.boardId === boardId)
+const getAllByBoardId = async (boardId: string): Promise<Task[]> => {
+  const tasks = await tasksRepo.getAll(boardId);
+  return tasks;
 }
 
 /**
@@ -18,7 +18,7 @@ const getAllByBoardId = async (boardId: string): Promise<ITask[]> => {
  * @param {string} taskid task id
  * @returns {function(string, string): Task|boolean} Task by Id and task id or false if board not find
  */
-const get = async (boardId: string, taskId: string): Promise<ITask|null> => {
+const get = async (boardId: string, taskId: string): Promise<Task|null> => {
   const task = await tasksRepo.get(boardId, taskId);
   if (!task) {
     throw new ErrorHandler(404, `Task with id: ${taskId} not found`);
@@ -32,7 +32,7 @@ const get = async (boardId: string, taskId: string): Promise<ITask|null> => {
  * @param {Task} data Task instance
  * @returns {function(string, Task): Task} created Task
  */
-const create = async (boardId: string, data: Task): Promise<ITask> => tasksRepo.create(boardId, data);
+const create = async (boardId: string, data: Task): Promise<Task> => tasksRepo.create(boardId, data);
 
 /**
  * This function return result of run update()
@@ -42,7 +42,7 @@ const create = async (boardId: string, data: Task): Promise<ITask> => tasksRepo.
  * @param {object.<string, task>} data object with keys and value to update Task data by keys
  * @returns {function(string, string, object.<string, task>): Task} updated Task instance
  */
-const update = async(boardId: string, taskId: string, data: IUpdateTaskData): Promise<ITask|null> => {
+const update = async(boardId: string, taskId: string, data: Task): Promise<Task|null> => {
   const task = await tasksRepo.update(boardId, taskId, data);
   if (!task) {
     throw new ErrorHandler(404, `Task with id: ${taskId} not found`);

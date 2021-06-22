@@ -1,14 +1,11 @@
-// import { getBoards, getBoard, createBoard, updateBoard, deleteBoardById } from '../../common/DB_in_memory';
-import Board, { IBoard, IUpdateBoardData } from "./board.model"
+import { Board } from "../../entities/Board.entity";
 import { getRepository } from "typeorm";
-import Task from "../tasks/task.model";//, { ITask } from "../tasks/task.model";
-// import taskDBAction from "../tasks/task.memory.repository";
+import { Task}  from "../../entities/task.entity";
 
 /**
  * This function run getBoards() and return all Boards from DB
  * @returns {Promise.<Array.<Board>>}  Promise which resolved with all Boards from DB
  */
-// const getAll = (): IBoard[] => getBoards();
 const getAll = async (): Promise<Board[]> => {
 const boardRepository = getRepository(Board)
 return boardRepository.find({where: {}})
@@ -19,8 +16,7 @@ return boardRepository.find({where: {}})
  * @param {string} id board id
  * @returns {Promise.<Board>} Promise which resolved with Board instance
  */
-// const get = async (id: string): Promise<IBoard|null> => getBoard(id);
-const get = async (id: string): Promise<IBoard|null> => {
+const get = async (id: string): Promise<Board|null> => {
     const boardRepositary = getRepository(Board)
     const board = await boardRepositary.findOne(id);
     if (board === undefined) return null;
@@ -32,8 +28,7 @@ const get = async (id: string): Promise<IBoard|null> => {
  * @param {Board} data
  * @returns {Promise.<Board>} Promise which resolved with creates Board instance
  */
-// const create = (data: IBoard): IBoard => createBoard(data);
-const create = async (data: IBoard): Promise<Board> =>  {
+const create = async (data: Omit<Board, "id">): Promise<Board> =>  {
     const boardRepositary = getRepository(Board)
     const newBoard = boardRepositary.create(data);
     const savedBoard = await boardRepositary.save(newBoard);
@@ -48,8 +43,7 @@ const create = async (data: IBoard): Promise<Board> =>  {
  * @param {object.<string, board>} data object with keys and value to update Task data by keys
  * @returns {Promise.<Board>} Promise which resolved with updated Board instance
  */
-// const update = async (id: string, data: IUpdateBoardData): Promise<IBoard|null> => updateBoard(id, data);
-const update = async (id: string, data: IUpdateBoardData): Promise<IBoard|null> => {
+const update = async (id: string, data: Omit<Board, "id">): Promise<Board|null> => {
     const boardRepositary = getRepository(Board)
     const board = boardRepositary.findOne(id);
     if (board === undefined) return null;
@@ -62,7 +56,6 @@ const update = async (id: string, data: IUpdateBoardData): Promise<IBoard|null> 
  * @param {string} id board id
  * @returns {Promise.<number>} Promise which resolved with index that has Board in DB
  */
-// const deleteBoard = async (id: string): Promise<number> => deleteBoardById(id);
 const deleteBoard = async (id: string): Promise<number> => {
     const boardRepositary = getRepository(Board);
 
@@ -74,11 +67,6 @@ const deleteBoard = async (id: string): Promise<number> => {
 
     const board = await boardRepositary.delete(id);
     if (board.affected) {
-        // const tasks = await taskDBAction.getAll(id);
-        // const tasksIds = tasks.map((it: ITask) => it.id);
-        // tasksIds.forEach(async (taskId:string) => {
-        //     await taskDBAction.deleteTask(id, taskId) 
-        // });
         return 1;
     }
     return -1   

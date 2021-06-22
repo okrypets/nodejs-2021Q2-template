@@ -1,13 +1,11 @@
 import { getRepository } from "typeorm";
-import User, { IUser, IUpdateUserData } from "./user.model";
-import Task  from "../tasks/task.model"; //, { ITask } from "../tasks/task.model";
-// import taskDBAction from "../tasks/task.memory.repository";
+import { User, IUser } from "../../entities/User.entity";
+import {Task}  from "../../entities/task.entity";
 
 /**
  * This function run getUsers() and return all Users from DB
  * @returns {Promise.<Array.<User>>} Promise which resolved with array of all Users
  */
-// const getAll = (): IUser[] => getUsers();
 const getAll = async (): Promise<User[]> => {
     const userRepositary = getRepository(User)
     return userRepositary.find({where: {}})
@@ -18,7 +16,6 @@ const getAll = async (): Promise<User[]> => {
  * @param {string} id user id
  * @returns {Promise.<User>} Promise which resolved with user instance
  */
-// const get = async (id: string): Promise<IUser|null> => getUser(id);
 const get = async (id: string): Promise<User|null> => {
     const userRepositary = getRepository(User)
     const user = await userRepositary.findOne(id);
@@ -31,7 +28,6 @@ const get = async (id: string): Promise<User|null> => {
  * @param {User} data User instance
  * @returns {Promise.<User>} Promise which resolved with created User
  */
-// const create = (data: IUser): IUser => createUser(data);
 const create = async (data: IUser): Promise<User> => {
     const userRepositary = getRepository(User)
     const newUser = userRepositary.create(data);
@@ -46,8 +42,7 @@ const create = async (data: IUser): Promise<User> => {
  * @param {object.<string, user>} data object with keys and value to update User data by keys
  * @returns {Promise.<User>} Promise which resolved with updated User
  */
-// const update = async (id: string, data: IUpdateUserData): Promise<IUser|null> => updateUser(id, data);
-const update = async (id: string, data: IUpdateUserData): Promise<IUser|null> => {
+const update = async (id: string, data: Omit<IUser, "id">): Promise<IUser|null> => {
     const userRepositary = getRepository(User)
     const user = userRepositary.findOne(id);
     if (user === undefined) return null;
@@ -60,17 +55,14 @@ const update = async (id: string, data: IUpdateUserData): Promise<IUser|null> =>
  * @param {string} id user id
  * @returns {Promise.<number>} Promise which resolved with index of removed User
  */
-// const deleteUser = async (id: string): Promise<number> => deleteUserById(id);
 const deleteUser = async (id: string): Promise<number> => {
     const userRepositary = getRepository(User)
+    const res = await userRepositary.findOne(id)
+    if (res === undefined || id === undefined) return -1;
+    const taskRepositary = getRepository(Task);
+    await taskRepositary.update({userId: id}, { userId: null });
     const user = await userRepositary.delete(id);
     if (user.affected) {
-        await getRepository(Task)
-    .createQueryBuilder()
-    .update()
-    .set({ userId: null })
-    .where(`userId = :userId`, { userId: id })
-    .execute();
         return 1;
     };
     return -1 
