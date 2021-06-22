@@ -1,6 +1,6 @@
 import { getRepository } from "typeorm";
 import { User, IUser } from "../../entities/User.entity";
-import {Task}  from "../../entities/task.entity";
+import {Task} from "../../entities/Tasks.entity";
 
 /**
  * This function run getUsers() and return all Users from DB

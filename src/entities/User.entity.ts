@@ -7,7 +7,7 @@ export interface IUser {
     password: string;
   }
 
-@Entity()
+@Entity({name: "User"})
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string | undefined;

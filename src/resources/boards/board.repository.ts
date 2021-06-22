@@ -1,6 +1,6 @@
-import { Board } from "../../entities/Board.entity";
 import { getRepository } from "typeorm";
-import { Task}  from "../../entities/task.entity";
+import { Board } from "../../entities/Board.entity";
+import { Task } from "../../entities/Tasks.entity";
 
 /**
  * This function run getBoards() and return all Boards from DB
@@ -58,13 +58,11 @@ const update = async (id: string, data: Omit<Board, "id">): Promise<Board|null> 
  */
 const deleteBoard = async (id: string): Promise<number> => {
     const boardRepositary = getRepository(Board);
-
-    await getRepository(Task)
-    .createQueryBuilder()
-    .delete()
-    .where(`boardId = :boardId`, { boardId: id })
-    .execute();
-
+    const res = await boardRepositary.findOne(id)
+    if (res === undefined || id === undefined) return -1
+  // const deletedUser = await boardRepositary.delete(id)
+  const taskRepo = getRepository(Task);
+  await taskRepo.delete({boardId: id})
     const board = await boardRepositary.delete(id);
     if (board.affected) {
         return 1;

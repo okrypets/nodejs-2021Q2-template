@@ -1,5 +1,5 @@
-import tasksRepo from './task.memory.repository';
-import { Task } from "../../entities/task.entity" // './_task.model';
+import tasksRepo from './task.repository';
+import { Task } from "../../entities/Tasks.entity";
 import { ErrorHandler } from '../../middleware/errorHandlerMiddleware';
 
 /**

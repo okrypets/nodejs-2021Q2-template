@@ -1,5 +1,5 @@
-import { Task } from "../../entities/task.entity";
 import { getRepository } from "typeorm";
+import { Task } from "../../entities/Tasks.entity";
 
 /**
  * This function run getTasks() and return all Tasks from DB
@@ -8,7 +8,7 @@ import { getRepository } from "typeorm";
  */
 const getAll = async (boardId: string): Promise<Task[]> => {
   const taskRepositary = getRepository(Task);
-  return taskRepositary.find({where: {boardId: `${boardId}`}})
+  return taskRepositary.find({where: {boardId: boardId }})
 }
 
 /**

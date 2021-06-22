@@ -10,10 +10,10 @@ export interface ITask {
     columnId: string | null; 
   }
 
-@Entity()
+@Entity({name: "Task"})
 export class Task extends BaseEntity {
     @PrimaryGeneratedColumn('uuid')
-    id: string | undefined;
+    id?: string;
 
     @Column('varchar')
     title = 'base string';

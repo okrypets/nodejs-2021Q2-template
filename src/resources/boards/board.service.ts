@@ -1,4 +1,4 @@
-import boardsRepo from './board.memory.repository';
+import boardsRepo from './board.repository';
 import { Board } from "../../entities/Board.entity"; 
 import { ErrorHandler } from '../../middleware/errorHandlerMiddleware';
 
