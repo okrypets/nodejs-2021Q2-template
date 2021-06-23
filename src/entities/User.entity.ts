@@ -18,6 +18,6 @@ export class User extends BaseEntity {
   @Column('varchar', {length: 35, nullable: true})
   login = 'user';
 
-  @Column('varchar', {length: 35, select: false, nullable: true})
+  @Column('varchar', {length: 500, select: false, nullable: false})
   password: string | undefined;
 }
