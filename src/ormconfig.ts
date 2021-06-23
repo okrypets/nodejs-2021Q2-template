@@ -16,9 +16,6 @@ const config: ConnectionOptions = {
     username: POSTGRES_USER, // databse login role username
     password: POSTGRES_PASSWORD, // database login role password
     database: POSTGRES_DB, // db name
-    // autoReconnect: true,
-    // reconnectTries: 1000,
-    // reconnectInterval: 10000,
     connectTimeoutMS: 60000,
 
     // entities name should be **.entity.ts

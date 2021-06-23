@@ -60,9 +60,8 @@ const deleteBoard = async (id: string): Promise<number> => {
     const boardRepositary = getRepository(Board);
     const res = await boardRepositary.findOne(id)
     if (res === undefined || id === undefined) return -1
-  // const deletedUser = await boardRepositary.delete(id)
-  const taskRepo = getRepository(Task);
-  await taskRepo.delete({boardId: id})
+    const taskRepo = getRepository(Task);
+    await taskRepo.delete({boardId: id})
     const board = await boardRepositary.delete(id);
     if (board.affected) {
         return 1;

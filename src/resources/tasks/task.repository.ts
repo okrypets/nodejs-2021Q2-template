@@ -30,9 +30,9 @@ const get = async (boardId: string, taskId: string): Promise<Task|null> => {
  * @param {Task} data Task instance
  * @returns {Promise.<Task>} Promise which resolved with created Task
  */
-const create = async (_boardId: string, data: Omit<Task, "id">): Promise<Task> => {
+const create = async (boardId: string, data: Omit<Task, "id">): Promise<Task> => {
   const taskRepositary = getRepository(Task)
-  const newTask = taskRepositary.create({...data});
+  const newTask = taskRepositary.create({...data, boardId });
   const savedTask = await taskRepositary.save(newTask);
   return savedTask;
 };
