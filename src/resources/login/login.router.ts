@@ -12,11 +12,9 @@ router.route('/').post(async (req: Request, res: Response, next: NextFunction) =
   try {
         const { login, password } = req.body;
         const user = await userRepo.getByLogin(login);
-        console.log(user)
         const bodyPasswordHash = await getHashPassword(password);
         if (user) {
             bcrypt.compare(password, bodyPasswordHash, (_err, matches) => {
-                console.log(matches)
                 if (matches) {
                     const token = jwt.sign({ id: user.id, login }, envData.JWT_SECRET_KEY as string, { expiresIn: 60 * 60 * 24 });
                     res.json({token: token

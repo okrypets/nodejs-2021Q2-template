@@ -2,7 +2,7 @@ import config from "../ormconfig"
 import { getConnection, createConnection } from "typeorm";
 
 const connectToDB = async () => {
-// let connection;
+
 try {
     await createConnection(config)
     const connection = getConnection();
@@ -11,16 +11,6 @@ try {
 } catch (error) {
     console.error("getConnection failed", error)
 }
-// try {
-//     if (connection) {
-//         if (!connection.isConnected) await connection.connect()
-//     } else {
-//         await createConnection(config)
-//     }
-//     console.log("well done")
-// } catch (error) {
-//     console.error("connection failed", error)
-// }
 
 }
 

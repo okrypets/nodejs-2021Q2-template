@@ -16,14 +16,11 @@ export const validationMiddleware = (req: Request, res: Response, next: NextFunc
             if (!sessionToken) {
                 res.status(401).send({ auth: false, message: "No token provided." });
             } else {
-                jwt.verify(sessionToken, envData.JWT_SECRET_KEY as string, async (_err, decoded) => {    
-                    console.log(decoded)          
+                jwt.verify(sessionToken, envData.JWT_SECRET_KEY as string, async (_err, decoded) => {            
                     if (decoded) {        
                         const userRepositary = getRepository(User)
                         const user = await userRepositary.findOne({ where: { id: decoded["id"] } })
                         if (user) {
-                            req.body.login = user.name;
-                            console.log(`user: ${user}`)
                             next()
                         } else {
                             res.status(401).send({ error: "not authorized" });
