@@ -23,6 +23,13 @@ const get = async (id: string): Promise<User|null> => {
     return user
 };
 
+const getByLogin = async (login: string): Promise<User|null> => {
+    const userRepositary = getRepository(User);
+    const user = await userRepositary.findOne({where: { login: login }})
+    if (user === undefined) return null;
+    return user
+}
+
 /**
  * this function run createUser() and create new User
  * @param {User} data User instance
@@ -68,4 +75,4 @@ const deleteUser = async (id: string): Promise<number> => {
     return -1 
 };
 
-export default { getAll, get, create, update, deleteUser };
+export default { getAll, get, create, update, deleteUser, getByLogin };
