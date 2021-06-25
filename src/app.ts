@@ -5,6 +5,7 @@ import loginRouter from "./resources/login/login.router";
 import { loggerMiddleware } from './middleware/loggerMiddleware';
 import { errorHandlerMiddleware } from './middleware/errorHandlerMiddleware';
 import { validationMiddleware } from "./middleware/validationMiddleware";
+import { createAdminUserMiddleware } from "./middleware/createAdminUserMiddleware";
 
 import express from 'express';
 import swaggerUI from 'swagger-ui-express';
@@ -27,6 +28,8 @@ app.use('/', (req, res, next) => {
   }
   next();
 });
+
+app.use(createAdminUserMiddleware)
 
 app.use(validationMiddleware)
 
