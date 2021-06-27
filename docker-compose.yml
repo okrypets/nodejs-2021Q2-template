@@ -6,12 +6,12 @@ services:
             - ${PORT}:${PORT}
         depends_on:
             - postgres
-        environment:
-            - PORT=${PORT}
+        command: ["npm", "start"]
         image: okrypets/nodejs
         volumes: 
             - ./src:/usr/src/app/src
             - ./logs:/usr/src/app/logs
+            - node_modules:/usr/node/app/node_modules
         networks: 
             - frontend
             - backend
@@ -19,7 +19,7 @@ services:
     postgres:
         build: ./database
         ports: 
-            - ${POSTGRES_PORT}:${POSTGRES_PORT}
+            - 5433:${POSTGRES_PORT}
         environment: 
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -29,13 +29,12 @@ services:
         networks: 
             - backend
         volumes:  
-            - pgdata:/var/lib/postgresql/data
+            - ./pgdata:/var/lib/postgresql/data
         restart: on-failure
 volumes: 
     logs:
-        external: true
     pgdata:
-        external: true
+    node_modules:
 networks:
     frontend: 
         name: frontend

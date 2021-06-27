@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es2020",
     "module": "commonjs",
     "allowJs": true,
     "outDir": "build",
-    "rootDir": "src",
+    "rootDir": "src", 
     "downlevelIteration": false,
     "strict": true,
     "noUnusedLocals": true,
@@ -18,12 +19,13 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node"]
   },
   "exclude": [
-    "../node_modules/"
+    "node_modules/"
   ],
   "include": [
-    "./src/"
+    "./src/**/*.ts"
   ]
 }

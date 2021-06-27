@@ -1,6 +1,5 @@
 import {Request, Response, NextFunction} from 'express'
 import express = require('express');
-import Task from './task.model';
 import tasksService from './task.service';
 
 const router = express.Router({mergeParams: true});
@@ -10,7 +9,7 @@ router.route('/').get(async (req: Request, res: Response, next: NextFunction) =>
     const { boardId } = req.params;
     if (boardId) {
       const tasks = await tasksService.getAllByBoardId(boardId);
-      if (tasks) res.json(tasks.map(Task.toResponse));
+      if (tasks) res.json(tasks);
     }    
   } catch (error) {
     next(error)
@@ -22,7 +21,7 @@ router.route('/:taskId').get(async (req: Request, res: Response, next: NextFunct
     const { boardId,  taskId } = req.params;
     if (boardId && taskId) {
       const task = await tasksService.get(boardId, taskId);
-      if (task) res.json(Task.toResponse(task));
+      if (task) res.json(task);
     } 
   } catch (error) {
     next(error)
@@ -34,7 +33,7 @@ router.route('/').post(async (req: Request, res: Response, next: NextFunction) =
     const { boardId } = req.params;
     if (boardId) {
       const task = await tasksService.create(boardId, req.body);
-      res.status(201).json(Task.toResponse(task));
+      res.status(201).json(task);
     }  
   } catch (error) {
     next(error)
@@ -47,7 +46,7 @@ router.route('/:taskId').put(async (req: Request, res: Response, next: NextFunct
     const { boardId,  taskId } = req.params;
     if (boardId && taskId) {
       const task = await tasksService.update(boardId, taskId, req.body);
-      if (task) res.json(Task.toResponse(task));
+      if (task) res.json(task);
     } 
   } catch (error) {
     next(error)
