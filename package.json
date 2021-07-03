@@ -12,6 +12,7 @@
     "build": "tsc",
     "dev": "nodemon -L src/",
     "start": "ts-node src/server.ts",
+    "start:dev": "nest start",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
@@ -50,6 +51,15 @@
     ]
   },
   "dependencies": {
+    "@nestjs/cli": "^7.6.0",
+    "@nestjs/common": "^7.6.18",
+    "@nestjs/config": "^0.6.3",
+    "@nestjs/core": "^7.6.18",
+    "@nestjs/platform-express": "^7.6.18",
+    "@nestjs/typeorm": "^7.1.5",
+    "@nestjs/platform-fastify": "^7.6.18",
+    "@nestjs/swagger": "^4.8.1",
+    "@nestjs/schematics": "^7.3.1",
     "@types/jsonwebtoken": "^8.5.2",
     "bcrypt": "^5.0.1",
     "cross-env": "7.0.3",
