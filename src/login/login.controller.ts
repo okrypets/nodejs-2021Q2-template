@@ -15,6 +15,7 @@ export class LoginController {
     async login(@Req() req: Request, @Res() res: Response): Promise<void> {
         const { login, password } = req.body;
         const user = await this.loginService.getUserByLogin(login);
+        console.log("LoginController", user)
         const bodyPasswordHash = await getHashPassword(password);
         if (user) {
             bcrypt.compare(password, bodyPasswordHash, (_err, matches) => {

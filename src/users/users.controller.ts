@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Put, Req, Res, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthGuard } from '../guard/auth.guard';
 import { UserService } from './users.service';
@@ -26,7 +26,7 @@ export class UserController {
       if (user) {
         const { id, name, login } = user;
         res.json({ id, name, login });
-      }      
+      } else throw new HttpException('Not found', HttpStatus.NOT_FOUND); 
     }
   }
 
@@ -36,7 +36,7 @@ export class UserController {
     if (user) {
       const { id, name, login } = user;
       res.status(201).json({ id, name, login });
-    }
+    } else throw new HttpException('Not found', HttpStatus.NOT_FOUND); 
   }
 
   @Put('/:userId')
@@ -47,7 +47,7 @@ export class UserController {
       if (user) {
         const { id, name, login } = user;
         res.json({ id, name, login });
-      }
+      }  else throw new HttpException('Not found', HttpStatus.NOT_FOUND); 
     }  
   }
 
@@ -55,8 +55,10 @@ export class UserController {
   async deleteById(@Req() req: Request,@Res()  res: Response): Promise<void> {
     const { userId } = req.params
     if (userId) {
-      await this.usersService.deleteUser(userId);
-      res.status(204).json('The user has been deleted');      
+      const index = await this.usersService.deleteUser(userId);
+      if (index !== -1) {
+        res.status(204).json('The user has been deleted');      
+      } else throw new HttpException('Not found', HttpStatus.NOT_FOUND);       
     } 
   }
 }

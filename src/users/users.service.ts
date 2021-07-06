@@ -13,7 +13,7 @@ export class UserService {
   getAll = async (): Promise<User[]> => this.userRepositary.find();
 
   get = async (id: string): Promise<User | null> => {
-    const user = await this.userRepositary.findOne(id);
+    const user = await this.userRepositary.findOne({ where: {id: id}});
     if (user === undefined) return null;
     return user
   };
@@ -25,8 +25,11 @@ export class UserService {
   }
 
   create = async (data: User): Promise<User> => {
+    console.log(data)
     const newUser = this.userRepositary.create(data);
+    console.log(newUser)
     const savedUser = await this.userRepositary.save(newUser);
+    console.log(savedUser)
     return savedUser;
   }
 

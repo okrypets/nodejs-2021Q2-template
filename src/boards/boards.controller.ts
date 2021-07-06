@@ -1,4 +1,4 @@
-import { Get, Post, Put, Delete, Controller, Req, Res, UseGuards } from '@nestjs/common';
+import { Get, Post, Put, Delete, Controller, Req, Res, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthGuard } from '../guard/auth.guard';
 import { BoardService } from './boards.service';
@@ -18,14 +18,16 @@ export class BoardController {
     const { boardId } = req.params;
     if (boardId) {
         const board = await this.boardsService.get(boardId);
-        if (board) res.json(board);
+        if (!board)  throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+        res.json(board);
       } 
   }
 
   @Post('/')
   async create(@Req() req: Request, @Res() res: Response): Promise<void> {
     const board = await this.boardsService.create(req.body);
-  res.status(201).json(board);
+    if (!board)  throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+    res.status(201).json(board);
   }
 
   @Put('/:boardId')
@@ -33,7 +35,8 @@ export class BoardController {
     const { boardId } = req.params;
     if (boardId) {
         const board = await this.boardsService.update(boardId, req.body);
-        if (board) res.json(board);
+        if (!board)  throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+        res.json(board);
       }
   }
 
@@ -41,8 +44,10 @@ export class BoardController {
   async deleteBoard(@Req() req: Request, @Res() res: Response): Promise<void> {
     const { boardId } = req.params;
     if (boardId) {
-        await this.boardsService.deleteBoard(boardId);      
-        res.status(204).json('The board has been deleted');      
+        const index = await this.boardsService.deleteBoard(boardId);      
+        if (index === -1)  { 
+          throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+        } else res.status(204).json('The board has been deleted');      
       }    
   }
 }

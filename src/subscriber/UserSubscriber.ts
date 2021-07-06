@@ -1,10 +1,12 @@
 import { EntitySubscriberInterface, EventSubscriber, InsertEvent, UpdateEvent } from 'typeorm';
+import { Injectable } from "@nestjs/common"
 import { User } from '../entities/User.entity';
 import { getHashPassword } from "../helpers/hashHelpers";
 
 @EventSubscriber()
+@Injectable()
 export class UserSubscriber implements EntitySubscriberInterface<User> {
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   listenTo() {
     return User;
   }

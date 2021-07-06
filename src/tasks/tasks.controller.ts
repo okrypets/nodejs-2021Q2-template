@@ -1,4 +1,4 @@
-import { Controller, Delete, Get, Post, Put, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Post, Put, Req, Res, UseGuards, HttpException, HttpStatus } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { AuthGuard } from '../guard/auth.guard';
 import { TaskService } from './tasks.service';
@@ -14,7 +14,8 @@ export class TaskController {
     const { boardId } = req.params;
     if (boardId) {
         const tasks = await this.tasksService.getAll(boardId);
-        if (tasks) res.json(tasks);
+        if (!tasks) throw new HttpException('Not found', HttpStatus.NOT_FOUND); 
+        res.json(tasks);
       } 
   }
 
@@ -23,7 +24,8 @@ export class TaskController {
     const { boardId,  taskId } = req.params;
     if (boardId && taskId) {
       const task = await this.tasksService.get(boardId, taskId);
-      if (task) res.json(task);
+      if (!task)  throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      res.json(task);
     } 
   }
 
@@ -32,6 +34,7 @@ export class TaskController {
     const { boardId } = req.params;
     if (boardId) {
       const task = await this.tasksService.create(boardId, req.body);
+      if (!task)  throw new HttpException('Not found', HttpStatus.NOT_FOUND);
       res.status(201).json(task);
     } 
   }
@@ -41,7 +44,8 @@ export class TaskController {
     const { boardId,  taskId } = req.params;
     if (boardId && taskId) {
       const task = await this.tasksService.updateTask(boardId, taskId, req.body);
-      if (task) res.json(task);
+      if (!task)  throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      res.json(task);
     } 
   }
 
@@ -49,8 +53,10 @@ export class TaskController {
   async deleteById(@Req() req: Request, @Res()  res: Response): Promise<void> {
     const { boardId,  taskId } = req.params;
     if (boardId && taskId) {
-      await this.tasksService.deleteTask(boardId, taskId);
-      res.status(204).json('The task has been deleted');
+      const index = await this.tasksService.deleteTask(boardId, taskId);
+      if (index === -1) {
+        throw new HttpException('Not found', HttpStatus.NOT_FOUND);
+      } else res.status(204).json('The task has been deleted');
     } 
   }
 }
