@@ -1,10 +1,6 @@
 {
   "name": "nest-app",
   "version": "0.0.1",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
   "author": "",
   "private": true,
   "type": "commonjs",

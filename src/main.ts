@@ -10,6 +10,6 @@ async function bootstrap() {
   const document = YAML.load(path.join(__dirname, '../doc/api.yaml'))
     SwaggerModule.setup('doc',app, document);
   await createAdminUserMiddleware();
-  await app.listen(3000);
+  await app.listen(4000);
 }
 bootstrap();

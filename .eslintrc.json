@@ -13,7 +13,7 @@
   "settings": {"noInlineConfig": true},
   "extends": [    
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "prettier"
   ],
   "rules": {
     "import/extensions": "off",

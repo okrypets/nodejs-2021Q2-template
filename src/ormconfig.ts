@@ -1,5 +1,6 @@
 import { ConnectionOptions } from "typeorm";
 import anvData from './common/config';
+import { UserSubscriber } from "./subscriber/UserSubscriber"
 
 const { POSTGRES_PORT, 
     POSTGRES_USER, 
@@ -37,7 +38,8 @@ const config: ConnectionOptions = {
     // Allow both start:prod and start:dev to use migrations
     // __dirname is either dist or src folder, meaning either
     // the compiled js in prod or the ts in dev.
-    subscribers: ['build/src/subscriber/*.js'],
+    // subscribers: ['build/src/subscriber/*.js'],
+    subscribers: [UserSubscriber],
     migrations: [`build/migration/*.js`],
     cli: {
       migrationsDir: 'src/migration'
