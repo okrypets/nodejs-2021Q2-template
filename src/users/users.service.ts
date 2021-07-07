@@ -25,11 +25,8 @@ export class UserService {
   }
 
   create = async (data: User): Promise<User> => {
-    console.log(data)
-    const newUser = this.userRepositary.create(data);
-    console.log(newUser)
+    const newUser = this.userRepositary.create({...data});
     const savedUser = await this.userRepositary.save(newUser);
-    console.log(savedUser)
     return savedUser;
   }
 

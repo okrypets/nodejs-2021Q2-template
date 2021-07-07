@@ -11,3 +11,6 @@ error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tas
 error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/825cd78e-4243-4d11-92b2-34336fc499ec 404 message:Task with id: 825cd78e-4243-4d11-92b2-34336fc499ec not found
 error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/c75f5705-18b8-4e20-812b-fd39136235bc 404 message:Task with id: c75f5705-18b8-4e20-812b-fd39136235bc not found
 error: GET:http://localhost:4000/boards/0eae6c47-747e-412d-8dc0-bf7101a26729/tasks/ba8d6c8d-5eca-4c39-add6-03cb59338089 404 message:Task with id: ba8d6c8d-5eca-4c39-add6-03cb59338089 not found
+GET:http://localhost:4000/users/2a75e554-793a-44af-a525-45522b007023 404 body:{} params:{"userId":"2a75e554-793a-44af-a525-45522b007023"} query:{} 
+GET:http://localhost:4000/users/2a75e554-793a-44af-a525-45522b007025 404 body:{} params:{"userId":"2a75e554-793a-44af-a525-45522b007025"} query:{} 
+GET:http://localhost:4000/users/2a75e554-793a-44af-a525-45522b007025 404 body:{} params:{"userId":"2a75e554-793a-44af-a525-45522b007025"} query:{} 

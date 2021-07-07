@@ -6,6 +6,7 @@ import { UserService } from './users.service';
 @UseGuards(AuthGuard)
 @Controller('/users')
 export class UserController {
+
   constructor(
     private readonly usersService:UserService
   ){}
@@ -41,7 +42,7 @@ export class UserController {
 
   @Put('/:userId')
   async updateUser(@Req() req: Request,@Res()  res: Response): Promise<void> {
-    const { userId } = req.params
+    const { userId } = req.params;
     if (userId) {
       const user = await this.usersService.update(userId, req.body);
       if (user) {
@@ -53,7 +54,7 @@ export class UserController {
 
   @Delete('/:userId')
   async deleteById(@Req() req: Request,@Res()  res: Response): Promise<void> {
-    const { userId } = req.params
+    const { userId } = req.params;
     if (userId) {
       const index = await this.usersService.deleteUser(userId);
       if (index !== -1) {
