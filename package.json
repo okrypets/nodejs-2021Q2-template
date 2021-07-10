@@ -22,7 +22,9 @@
     "test:auth": "cross-env DEBUG=rs:* TEST_MODE=auth jest --noStackTrace",
     "typeorm": "ts-node --files -r tsconfig-paths/register ./node_modules/typeorm/cli.js --config src/ormconfig.ts",
     "migration:generate": "npm run typeorm migration:generate -- -n",
-    "migration:run": "npm run typeorm -- migration:run"
+    "migration:run": "npm run typeorm -- migration:run",
+    "artilery:dino": "artillery dino",
+    "artilery:run": "artillery run -o logs/report.json artilery.yml"
   },
   "keywords": [
     "rs",
@@ -68,6 +70,7 @@
     "cross-env": "7.0.3",
     "dotenv": "9.0.0",
     "express": "4.17.1",
+    "fastify-swagger": "^4.8.2",
     "http-status-codes": "^2.1.4",
     "jsonwebtoken": "^8.5.1",
     "nest-winston": "^1.5.0",
@@ -100,6 +103,7 @@
     "@types/yamljs": "^0.2.31",
     "@typescript-eslint/eslint-plugin": "^4.19.0",
     "@typescript-eslint/parser": "^4.19.0",
+    "artillery": "^1.7.6",
     "chai": "4.3.4",
     "debug": "4.3.1",
     "dirty-chai": "2.0.1",

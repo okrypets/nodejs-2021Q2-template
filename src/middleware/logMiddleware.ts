@@ -7,7 +7,8 @@ import { Request, Response, NextFunction } from 'express';
 export class LoggerMiddleware implements NestMiddleware {
   use(@Req() req: Request, @Res() res: Response, @Next() next: NextFunction) {
     const { method, body, params, query } = req;
-    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    // const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+    const fullUrl = 'https://localhost' + req.originalUrl;
     next();  
     finished(res, () => {
       const log = `${method}:${fullUrl} ${res.statusCode} body:${JSON.stringify(body)} params:${JSON.stringify(params)} query:${JSON.stringify(query)} \n`;
