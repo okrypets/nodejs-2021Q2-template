@@ -1,0 +1,41 @@
+config:
+    target: 'http://localhost:4000'
+    phases:
+        - duration: 10
+          arrivalRate: 1
+scenarios:
+    - name: 'users'
+      flow:
+        - put: 
+            url: '/login'
+            json:
+              login: 'admin'
+              password: 'admin'
+            capture: 
+              json: '$.token'
+              as: 'token'
+        - log: "Token is: {{token}}"
+        - get:
+            headers:
+                authorization: 'Bearer {{token}}'
+            url: '/users'
+            captire:
+              json: '$[0].id'
+              as: 'userId'
+        - get:
+            headers:
+                authorization: "Bearer {{token}}"
+            url: "/users/{{userId}}"
+        - post:
+            headers:
+                authorization: "Bearer {{token}}"
+            url: "/users"
+            json: 
+              name: "userName"
+              login: "userLogin"
+              password: "password"
+            captire:
+              json: "$.id"
+              as: "createdId"
+
+        

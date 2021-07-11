@@ -1,17 +1,21 @@
-import {Request, Response, NextFunction} from 'express';
-import express = require('express');
-import userRepo from "../users/user.repository";
-import { getHashPassword } from "../../helpers/hashHelpers";
+import { Post, Controller, Req, Res, UseGuards } from '@nestjs/common';
+import { Request, Response } from 'express';
+import { AuthGuard } from '../guard/auth.guard';
+import { getHashPassword } from "../helpers/hashHelpers";
 import bcrypt from "bcrypt";
 import jwt from 'jsonwebtoken';
-import envData from "../../common/config";
+import envData from "../common/config";
+import { LoginService } from './login.service';
 
-const router = express.Router();
-
-router.route('/').post(async (req: Request, res: Response, next: NextFunction) => {
-  try {
+@Controller('/login')
+@UseGuards(AuthGuard)
+export class LoginController {
+    constructor(private readonly loginService: LoginService) {}
+    @Post('/')
+    async login(@Req() req: Request, @Res() res: Response): Promise<void> {
         const { login, password } = req.body;
-        const user = await userRepo.getByLogin(login);
+        const user = await this.loginService.getUserByLogin(login);
+        console.log("LoginController", user)
         const bodyPasswordHash = await getHashPassword(password);
         if (user) {
             bcrypt.compare(password, bodyPasswordHash, (_err, matches) => {
@@ -26,10 +30,5 @@ router.route('/').post(async (req: Request, res: Response, next: NextFunction) =
         } else {
             res.status(404).send({ error: "No such User in DB." })
         }
-    
-  } catch (error) {
-    next(error)
-  }    
-});
-
-export default router
+    }
+}

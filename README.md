@@ -27,6 +27,47 @@ After starting the app on port (4000 as default) you can open
 in your browser OpenAPI documentation by typing http://localhost:4000/doc/.
 For more information about OpenAPI/Swagger please visit https://swagger.io/.
 
+## Express vs Fastify
+
+```
+Express:
+
+Summary report @ 00:18:23(+0300) 2021-07-11
+  Scenarios launched:  10
+  Scenarios completed: 0
+  Requests completed:  10
+  Mean response/sec: 1.03
+  Response time (msec):
+    min: 2
+    max: 9
+    median: 3.5
+    p95: 9
+    p99: 9
+  Scenario counts:
+    users: 10 (100%)
+  Codes:
+    404: 10
+
+Fastify:
+
+Summary report @ 00:20:02(+0300) 2021-07-11
+  Scenarios launched:  10
+  Scenarios completed: 0
+  Requests completed:  10
+  Mean response/sec: 1.03
+  Response time (msec):
+    min: 2
+    max: 55
+    median: 3.5
+    p95: 55
+    p99: 55
+  Scenario counts:
+    users: 10 (100%)
+  Codes:
+    404: 10
+
+```
+
 ## Use Docker
 
 To run app with docker you should install Docker (https://docs.docker.com/engine/install/)

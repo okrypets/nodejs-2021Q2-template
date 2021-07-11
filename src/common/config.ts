@@ -15,5 +15,7 @@ export default  {
 POSTGRES_USER: process.env["POSTGRES_USER"],
 POSTGRES_PASSWORD: process.env["POSTGRES_PASSWORD"],
 POSTGRES_DB: process.env["POSTGRES_DB"],
-POSTGRES_HOST: process.env["POSTGRES_HOST"]
+POSTGRES_HOST: process.env["POSTGRES_HOST"],
+POSTGRES_PORT_HOST: process.env["POSTGRES_PORT_HOST"],
+USE_FASTIFY: process.env["USE_FASTIFY"]
 };
